@@ -161,7 +161,7 @@ resource "azurerm_linux_virtual_machine" "myterraformvm" {
 
     computer_name  = "${var.salt}-vm"
     admin_username = "windu"
-    admin_password = "Lookingfordroids?"
+    admin_password = var.admin_password
     disable_password_authentication = false
 
 
