@@ -1,3 +1,4 @@
-/src/
-/.idea/
-/.terraform/
+/src/*
+/.idea/*
+/.terraform/*
+/bak/*
