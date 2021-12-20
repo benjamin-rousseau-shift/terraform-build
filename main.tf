@@ -31,7 +31,7 @@ resource "azurerm_resource_group" "myterraformgroup" {
 # Create virtual network
 resource "azurerm_virtual_network" "myterraformnetwork" {
   name                = "${var.enterprise}-${var.environment}-${var.region}-SUB"
-  address_space       = ["10.100.0.0/16"]
+  address_space       = ["10.99.0.0/16"]
   location            = var.azurelocation
   resource_group_name = azurerm_resource_group.myterraformgroup.name
 
