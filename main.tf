@@ -467,6 +467,14 @@ resource "azurerm_virtual_machine" "myterraformvm" {
     version   = "9.1.0"
   }
 
+  plan {
+    # Using a pay as you go license set sku to "bundle2"
+    # To use a purchased license change sku to "byol"
+    name      = "bundle2"
+    publisher = "paloaltonetworks"
+    product   = "vmseries1"
+  }
+
   storage_os_disk {
     name          = "${var.FirewallVmName}-OSDisk"
     caching       = "ReadWrite"
