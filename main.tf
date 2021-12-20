@@ -31,7 +31,7 @@ resource "azurerm_resource_group" "myterraformgroup" {
 # Create virtual network
 resource "azurerm_virtual_network" "myterraformnetwork" {
   name                = "${var.enterprise}-${var.environment}-${var.region}-SUB"
-  address_space       = ["10.99.0.0/16"]
+  address_space       = ["${var.IPAddressPrefix}.0.0/16"]
   location            = var.azurelocation
   resource_group_name = azurerm_resource_group.myterraformgroup.name
 
@@ -47,77 +47,77 @@ resource "azurerm_subnet" "myterraformsubnetmgmt" {
   name                 = "${var.enterprise}-${var.environment}-${var.region}-ZONE-MGMT"
   resource_group_name  = azurerm_resource_group.myterraformgroup.name
   virtual_network_name = azurerm_virtual_network.myterraformnetwork.name
-  address_prefixes     = ["10.99.0.0/24"]
+  address_prefixes     = ["${var.IPAddressPrefix}.0.0/24"]
 }
 
 resource "azurerm_subnet" "myterraformsubnetuntrust" {
   name                 = "${var.enterprise}-${var.environment}-${var.region}-ZONE-UNTRUST"
   resource_group_name  = azurerm_resource_group.myterraformgroup.name
   virtual_network_name = azurerm_virtual_network.myterraformnetwork.name
-  address_prefixes     = ["10.99.1.0/24"]
+  address_prefixes     = ["${var.IPAddressPrefix}.1.0/24"]
 }
 
 resource "azurerm_subnet" "myterraformsubnetweb" {
   name                 = "${var.enterprise}-${var.environment}-${var.region}-ZONE-WEB"
   resource_group_name  = azurerm_resource_group.myterraformgroup.name
   virtual_network_name = azurerm_virtual_network.myterraformnetwork.name
-  address_prefixes     = ["10.99.2.0/24"]
+  address_prefixes     = ["${var.IPAddressPrefix}.2.0/24"]
 }
 
 resource "azurerm_subnet" "myterraformsubnetstorage" {
   name                 = "${var.enterprise}-${var.environment}-${var.region}-ZONE-STORAGE"
   resource_group_name  = azurerm_resource_group.myterraformgroup.name
   virtual_network_name = azurerm_virtual_network.myterraformnetwork.name
-  address_prefixes     = ["10.99.3.0/24"]
+  address_prefixes     = ["${var.IPAddressPrefix}.3.0/24"]
 }
 
 resource "azurerm_subnet" "myterraformsubnetdbcp" {
   name                 = "${var.enterprise}-${var.environment}-${var.region}-ZONE-DBCP"
   resource_group_name  = azurerm_resource_group.myterraformgroup.name
   virtual_network_name = azurerm_virtual_network.myterraformnetwork.name
-  address_prefixes     = ["10.99.4.0/24"]
+  address_prefixes     = ["${var.IPAddressPrefix}.4.0/24"]
 }
 
 resource "azurerm_subnet" "myterraformsubnetinternalsrv" {
   name                 = "${var.enterprise}-${var.environment}-${var.region}-ZONE-INTERNAL-SRV"
   resource_group_name  = azurerm_resource_group.myterraformgroup.name
   virtual_network_name = azurerm_virtual_network.myterraformnetwork.name
-  address_prefixes     = ["10.99.5.0/24"]
+  address_prefixes     = ["${var.IPAddressPrefix}.5.0/24"]
 }
 
 resource "azurerm_subnet" "myterraformsubnetmgt" {
   name                 = "${var.enterprise}-${var.environment}-${var.region}-ZONE-MGT"
   resource_group_name  = azurerm_resource_group.myterraformgroup.name
   virtual_network_name = azurerm_virtual_network.myterraformnetwork.name
-  address_prefixes     = ["10.99.7.0/24"]
+  address_prefixes     = ["${var.IPAddressPrefix}.7.0/24"]
 }
 
 resource "azurerm_subnet" "myterraformsubnet-rets-web" {
   name                 = "${var.enterprise}-${var.environment}-${var.region}-RETS-WEB"
   resource_group_name  = azurerm_resource_group.myterraformgroup.name
   virtual_network_name = azurerm_virtual_network.myterraformnetwork.name
-  address_prefixes     = ["10.99.8.0/27"]
+  address_prefixes     = ["${var.IPAddressPrefix}.8.0/27"]
 }
 
 resource "azurerm_subnet" "myterraformsubnet-rets-storage" {
   name                 = "${var.enterprise}-${var.environment}-${var.region}-RETS-STORAGE"
   resource_group_name  = azurerm_resource_group.myterraformgroup.name
   virtual_network_name = azurerm_virtual_network.myterraformnetwork.name
-  address_prefixes     = ["10.99.8.32/27"]
+  address_prefixes     = ["${var.IPAddressPrefix}.8.32/27"]
 }
 
 resource "azurerm_subnet" "myterraformsubnet-rets-dbcp" {
   name                 = "${var.enterprise}-${var.environment}-${var.region}-RETS-DBCP"
   resource_group_name  = azurerm_resource_group.myterraformgroup.name
   virtual_network_name = azurerm_virtual_network.myterraformnetwork.name
-  address_prefixes     = ["10.99.8.64/26"]
+  address_prefixes     = ["${var.IPAddressPrefix}.8.64/26"]
 }
 
 resource "azurerm_subnet" "myterraformsubnet-rets-mgt" {
   name                 = "${var.enterprise}-${var.environment}-${var.region}-RETS-MGT"
   resource_group_name  = azurerm_resource_group.myterraformgroup.name
   virtual_network_name = azurerm_virtual_network.myterraformnetwork.name
-  address_prefixes     = ["10.99.8.224/27"]
+  address_prefixes     = ["${var.IPAddressPrefix}.8.224/27"]
 }
 
 # Create public IPs
@@ -168,7 +168,7 @@ resource "azurerm_network_interface" "myterraformniceth0" {
     name                          = "primary"
     subnet_id                     = azurerm_subnet.myterraformsubnetmgmt.id
     private_ip_address_allocation = "Static"
-    private_ip_address            = "10.99.0.254"
+    private_ip_address            = "${var.IPAddressPrefix}.0.254"
     public_ip_address_id          = azurerm_public_ip.myterraformpublicipmgmt.id
   }
 
@@ -183,7 +183,7 @@ resource "azurerm_network_interface" "myterraformniceth1" {
     name                          = "primary"
     subnet_id                     = azurerm_subnet.myterraformsubnetuntrust.id
     private_ip_address_allocation = "Static"
-    private_ip_address            = "10.99.1.254"
+    private_ip_address            = "${var.IPAddressPrefix}.1.254"
     public_ip_address_id          = azurerm_public_ip.myterraformpublicipuntrust.id
   }
 
@@ -198,7 +198,7 @@ resource "azurerm_network_interface" "myterraformniceth2" {
     name                          = "primary"
     subnet_id                     = azurerm_subnet.myterraformsubnetweb.id
     private_ip_address_allocation = "Static"
-    private_ip_address            = "10.99.2.254"
+    private_ip_address            = "${var.IPAddressPrefix}.2.254"
   }
 
 }
@@ -212,7 +212,7 @@ resource "azurerm_network_interface" "myterraformniceth3" {
     name                          = "primary"
     subnet_id                     = azurerm_subnet.myterraformsubnetstorage.id
     private_ip_address_allocation = "Static"
-    private_ip_address            = "10.99.3.254"
+    private_ip_address            = "${var.IPAddressPrefix}.3.254"
   }
 
 }
@@ -225,7 +225,7 @@ resource "azurerm_network_interface" "myterraformniceth4" {
     name                          = "primary"
     subnet_id                     = azurerm_subnet.myterraformsubnetdbcp.id
     private_ip_address_allocation = "Static"
-    private_ip_address            = "10.99.4.254"
+    private_ip_address            = "${var.IPAddressPrefix}.4.254"
   }
 
 }
@@ -239,7 +239,7 @@ resource "azurerm_network_interface" "myterraformniceth5" {
     name                          = "primary"
     subnet_id                     = azurerm_subnet.myterraformsubnetinternalsrv.id
     private_ip_address_allocation = "Static"
-    private_ip_address            = "10.99.5.254"
+    private_ip_address            = "${var.IPAddressPrefix}.5.254"
   }
 
 }
@@ -253,7 +253,7 @@ resource "azurerm_network_interface" "myterraformniceth6" {
     name                          = "primary"
     subnet_id                     = azurerm_subnet.myterraformsubnetmgt.id
     private_ip_address_allocation = "Static"
-    private_ip_address            = "10.99.7.254"
+    private_ip_address            = "${var.IPAddressPrefix}.7.254"
   }
 
 }
@@ -279,19 +279,19 @@ resource "azurerm_route_table" "route-rets-web" {
     name                   = "DEFAULT-ROUTE"
     address_prefix         = "0.0.0.0/0"
     next_hop_type          = "VirtualAppliance"
-    next_hop_in_ip_address = "10.99.2.254"
+    next_hop_in_ip_address = "${var.IPAddressPrefix}.2.254"
   }
 
   route {
-    name                   = "ROUTE-TO-10.99.2.0-16"
-    address_prefix         = "10.99.2.0/16"
+    name                   = "ROUTE-TO-${var.IPAddressPrefix}.2.0-16"
+    address_prefix         = "${var.IPAddressPrefix}.2.0/16"
     next_hop_type          = "VirtualAppliance"
-    next_hop_in_ip_address = "10.99.2.254"
+    next_hop_in_ip_address = "${var.IPAddressPrefix}.2.254"
   }
 
   route {
     name           = "ROUTE-TO-LOCAL-SUBNET"
-    address_prefix = "10.99.2.0/27"
+    address_prefix = "${var.IPAddressPrefix}.2.0/27"
     next_hop_type  = "VnetLocal"
 
   }
@@ -309,19 +309,19 @@ resource "azurerm_route_table" "route-rets-storage" {
     name                   = "DEFAULT-ROUTE"
     address_prefix         = "0.0.0.0/0"
     next_hop_type          = "VirtualAppliance"
-    next_hop_in_ip_address = "10.99.3.254"
+    next_hop_in_ip_address = "${var.IPAddressPrefix}.3.254"
   }
 
   route {
-    name                   = "ROUTE-TO-10.99.3.0-16"
-    address_prefix         = "10.99.3.0/16"
+    name                   = "ROUTE-TO-${var.IPAddressPrefix}.3.0-16"
+    address_prefix         = "${var.IPAddressPrefix}.3.0/16"
     next_hop_type          = "VirtualAppliance"
-    next_hop_in_ip_address = "10.99.3.254"
+    next_hop_in_ip_address = "${var.IPAddressPrefix}.3.254"
   }
 
   route {
     name           = "ROUTE-TO-LOCAL-SUBNET"
-    address_prefix = "10.99.8.32/27"
+    address_prefix = "${var.IPAddressPrefix}.8.32/27"
     next_hop_type  = "VnetLocal"
 
   }
@@ -339,19 +339,19 @@ resource "azurerm_route_table" "route-rets-dbcp" {
     name                   = "DEFAULT-ROUTE"
     address_prefix         = "0.0.0.0/0"
     next_hop_type          = "VirtualAppliance"
-    next_hop_in_ip_address = "10.99.4.254"
+    next_hop_in_ip_address = "${var.IPAddressPrefix}.4.254"
   }
 
   route {
-    name                   = "ROUTE-TO-10.99.4.0-16"
-    address_prefix         = "10.99.4.0/16"
+    name                   = "ROUTE-TO-${var.IPAddressPrefix}.4.0-16"
+    address_prefix         = "${var.IPAddressPrefix}.4.0/16"
     next_hop_type          = "VirtualAppliance"
-    next_hop_in_ip_address = "10.99.4.254"
+    next_hop_in_ip_address = "${var.IPAddressPrefix}.4.254"
   }
 
   route {
     name           = "ROUTE-TO-LOCAL-SUBNET"
-    address_prefix = "10.99.8.64/26"
+    address_prefix = "${var.IPAddressPrefix}.8.64/26"
     next_hop_type  = "VnetLocal"
 
   }
@@ -369,19 +369,19 @@ resource "azurerm_route_table" "route-rets-mgt" {
     name                   = "DEFAULT-ROUTE"
     address_prefix         = "0.0.0.0/0"
     next_hop_type          = "VirtualAppliance"
-    next_hop_in_ip_address = "10.99.7.254"
+    next_hop_in_ip_address = "${var.IPAddressPrefix}.7.254"
   }
 
   route {
-    name                   = "ROUTE-TO-10.99.7.0-16"
-    address_prefix         = "10.99.7.0/16"
+    name                   = "ROUTE-TO-${var.IPAddressPrefix}.7.0-16"
+    address_prefix         = "${var.IPAddressPrefix}.7.0/16"
     next_hop_type          = "VirtualAppliance"
-    next_hop_in_ip_address = "10.99.7.254"
+    next_hop_in_ip_address = "${var.IPAddressPrefix}.7.254"
   }
 
   route {
     name           = "ROUTE-TO-LOCAL-SUBNET"
-    address_prefix = "10.99.8.224/27"
+    address_prefix = "${var.IPAddressPrefix}.8.224/27"
     next_hop_type  = "VnetLocal"
 
   }
@@ -492,7 +492,7 @@ resource "azurerm_virtual_machine" "myterraformvm" {
 
   tags = {
     TYPE = "FIREWALL"
-    PROJECT = "PAFW"
+    PROJECT = var.project
     LOCATION = "${var.environment}-${var.region}"
     ENVIRONMENT = "INTERNAL-PROD"
   }
