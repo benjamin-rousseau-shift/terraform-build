@@ -274,6 +274,7 @@ resource "azurerm_route_table" "route-rets-web" {
   location                      = var.azurelocation
   resource_group_name           = azurerm_resource_group.myterraformgroup.name
   disable_bgp_route_propagation = false
+  depends_on = [azurerm_subnet.myterraformsubnet-rets-web]
 
   route {
     name                   = "DEFAULT-ROUTE"
@@ -304,6 +305,7 @@ resource "azurerm_route_table" "route-rets-storage" {
   location                      = var.azurelocation
   resource_group_name           = azurerm_resource_group.myterraformgroup.name
   disable_bgp_route_propagation = false
+  depends_on = [azurerm_subnet.myterraformsubnet-rets-storage]
 
   route {
     name                   = "DEFAULT-ROUTE"
@@ -334,6 +336,7 @@ resource "azurerm_route_table" "route-rets-dbcp" {
   location                      = var.azurelocation
   resource_group_name           = azurerm_resource_group.myterraformgroup.name
   disable_bgp_route_propagation = false
+  depends_on = [azurerm_subnet.myterraformsubnet-rets-dbcp]
 
   route {
     name                   = "DEFAULT-ROUTE"
@@ -364,6 +367,7 @@ resource "azurerm_route_table" "route-rets-mgt" {
   location                      = var.azurelocation
   resource_group_name           = azurerm_resource_group.myterraformgroup.name
   disable_bgp_route_propagation = false
+  depends_on = [azurerm_subnet.myterraformsubnet-rets-mgt]
 
   route {
     name                   = "DEFAULT-ROUTE"
@@ -392,20 +396,24 @@ resource "azurerm_route_table" "route-rets-mgt" {
 resource "azurerm_subnet_route_table_association" "route_table_association_web" {
   subnet_id      = azurerm_subnet.myterraformsubnet-rets-web.id
   route_table_id = azurerm_route_table.route-rets-web.id
+  depends_on = [azurerm_route_table.route-rets-web]
 }
 resource "azurerm_subnet_route_table_association" "route_table_association_storage" {
   subnet_id      = azurerm_subnet.myterraformsubnet-rets-storage.id
   route_table_id = azurerm_route_table.route-rets-storage.id
+  depends_on = [azurerm_route_table.route-rets-storage]
 }
 
 resource "azurerm_subnet_route_table_association" "route_table_association_dbcp" {
   subnet_id      = azurerm_subnet.myterraformsubnet-rets-dbcp.id
   route_table_id = azurerm_route_table.route-rets-dbcp.id
+  depends_on = [azurerm_route_table.route-rets-dbcp]
 }
 
 resource "azurerm_subnet_route_table_association" "route_table_association_mgt" {
   subnet_id      = azurerm_subnet.myterraformsubnet-rets-mgt.id
   route_table_id = azurerm_route_table.route-rets-mgt.id
+  depends_on = [azurerm_route_table.route-rets-mgt]
 }
 
 # Create storage account for boot diagnostics
