@@ -5,6 +5,10 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "~>2.0"
     }
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "~>2.0"
+    }
   }
 }
 provider "azurerm" {
@@ -17,8 +21,6 @@ provider "azurerm" {
 }
 
 provider "azuread" {
-
-  subscription_id = var.subscription_id
   client_id       = var.client_id
   client_secret   = var.client_secret
   tenant_id       = var.tenant_id
