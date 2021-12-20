@@ -456,7 +456,7 @@ resource "azurerm_virtual_machine" "myterraformvm" {
 
   location              = var.azurelocation
   resource_group_name   = azurerm_resource_group.myterraformgroup.name
-  vm_size                  = "Standard_D3_v2"
+  vm_size                  = "Standard_D4_v2"
 
   storage_image_reference {
     publisher = "paloaltonetworks"
