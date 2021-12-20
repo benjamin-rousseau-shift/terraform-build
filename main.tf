@@ -499,5 +499,5 @@ resource "azurerm_virtual_machine" "myterraformvm" {
 }
 
 output "FirewallMgmtIP" {
-  value = join("", list("https://", azurerm_public_ip.myterraformpublicipmgmt.ip_address))
+  value = join("", tolist("https://", azurerm_public_ip.myterraformpublicipmgmt.ip_address))
 }
