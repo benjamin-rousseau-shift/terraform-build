@@ -90,7 +90,7 @@ resource "azuread_service_principal" "adapp-client-sp" {
 resource "azurerm_key_vault" "mykeyvault-client" {
   name                        = "${var.enterprise}-${var.environment}-${var.region}-${var.client}-KV"
   location                    = var.azurelocation
-  resource_group_name         = azurerm_resource_group.myterraformgroup-client
+  resource_group_name         = azurerm_resource_group.myterraformgroup-client.name
   enabled_for_disk_encryption = true
   tenant_id                   = var.tenant_id
   soft_delete_retention_days  = 7
