@@ -390,22 +390,22 @@ resource "azurerm_route_table" "route-rets-mgt" {
 
 # Association route tables
 resource "azurerm_subnet_route_table_association" "route_table_association_web" {
-  subnet_id      = azurerm_subnet.myterraformsubnet-rets-web
-  route_table_id = azurerm_route_table.route-rets-web
+  subnet_id      = azurerm_subnet.myterraformsubnet-rets-web.id
+  route_table_id = azurerm_route_table.route-rets-web.id
 }
 resource "azurerm_subnet_route_table_association" "route_table_association_storage" {
-  subnet_id      = azurerm_subnet.myterraformsubnet-rets-storage
-  route_table_id = azurerm_route_table.route-rets-storage
+  subnet_id      = azurerm_subnet.myterraformsubnet-rets-storage.id
+  route_table_id = azurerm_route_table.route-rets-storage.id
 }
 
 resource "azurerm_subnet_route_table_association" "route_table_association_dbcp" {
-  subnet_id      = azurerm_subnet.myterraformsubnet-rets-dbcp
-  route_table_id = azurerm_route_table.route-rets-dbcp
+  subnet_id      = azurerm_subnet.myterraformsubnet-rets-dbcp.id
+  route_table_id = azurerm_route_table.route-rets-dbcp.id
 }
 
 resource "azurerm_subnet_route_table_association" "route_table_association_mgt" {
-  subnet_id      = azurerm_subnet.myterraformsubnet-rets-mgt
-  route_table_id = azurerm_route_table.route-rets-mgt
+  subnet_id      = azurerm_subnet.myterraformsubnet-rets-mgt.id
+  route_table_id = azurerm_route_table.route-rets-mgt.id
 }
 
 # Create storage account for boot diagnostics
