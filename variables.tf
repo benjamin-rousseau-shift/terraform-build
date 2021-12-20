@@ -9,6 +9,11 @@ variable "environment" {
 
 }
 
+variable "backup_management_id" {
+  type = string
+  default = "262044b1-e2ce-469f-a196-69ab7ada62d3"
+}
+
 variable "enterprise" {
   type = string
   default = "SH"
@@ -17,6 +22,16 @@ variable "enterprise" {
 variable "project" {
   type = string
   default = "PAFW"
+}
+
+variable "intl_project" {
+  type = string
+  default = "INTL"
+}
+
+variable "client" {
+  type = string
+  default = "RETS"
 }
 
 variable "azurelocation" {
