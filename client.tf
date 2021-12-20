@@ -47,7 +47,7 @@ resource "azurerm_storage_account" "mystorageaccount-client-ssd" {
 resource "azurerm_recovery_services_vault" "myvault-client" {
   name                = "${var.enterprise}-${var.environment}-${var.region}-${var.client}-RSV"
   location            = var.azurelocation
-  resource_group_name = azurerm_resource_group.myterraformgroup-client
+  resource_group_name = azurerm_resource_group.myterraformgroup-client.name
   sku                 = "Standard"
 
   soft_delete_enabled = true
