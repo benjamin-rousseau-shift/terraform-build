@@ -450,6 +450,13 @@ resource "azurerm_storage_account" "mystorageaccount-pafw" {
   }
 }
 
+# Accept Terms for the PAN OS Image
+resource "azurerm_marketplace_agreement" "panosimage" {
+  publisher ="paloaltonetworks"
+  offer     = "vmseries1"
+  plan       = "bundle2"
+}
+
 # Create virtual machine
 resource "azurerm_virtual_machine" "myterraformvm" {
   name = var.FirewallVmName
@@ -457,6 +464,7 @@ resource "azurerm_virtual_machine" "myterraformvm" {
   location              = var.azurelocation
   resource_group_name   = azurerm_resource_group.myterraformgroup.name
   vm_size                  = "Standard_D4_v2"
+  depends_on = [azurerm_marketplace_agreement.panosimage]
 
   storage_image_reference {
     publisher = "paloaltonetworks"
