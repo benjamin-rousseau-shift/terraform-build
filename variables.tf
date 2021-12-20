@@ -9,6 +9,8 @@ variable "environment" {
 
 }
 
+variable "storage_access_key" {}
+
 variable "backup_management_id" {
   type = string
   default = "ac4ce12d-aeb1-4718-992f-768486206f0e"

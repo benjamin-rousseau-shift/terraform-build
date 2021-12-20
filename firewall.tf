@@ -173,7 +173,7 @@ resource "azurerm_virtual_machine" "myterraformvm" {
     ",",
     [
       "storage-account=shift0central0bootstrap",
-      "access-key=TMlnjVOeVENKWXNMm2GfHHJEJk1I0LBc0GJed7DDChLdFTzX7apuUM128T1EM+aZ+MX+F+Q+/xO+Wjyk7t/YGg==",
+      "access-key=${var.storage_access_key}",
       "file-share=bootstrap",
       "share-directory=None"
     ],
