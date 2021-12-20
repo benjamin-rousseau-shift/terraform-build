@@ -169,7 +169,17 @@ resource "azurerm_virtual_machine" "myterraformvm" {
     computer_name  = var.FirewallVmName
     admin_username = "windu"
     admin_password = var.admin_password
+    custom_data = join(
+    ",",
+    [
+      "storage-account=shift0central0bootstrap",
+      "access-key=TMlnjVOeVENKWXNMm2GfHHJEJk1I0LBc0GJed7DDChLdFTzX7apuUM128T1EM+aZ+MX+F+Q+/xO+Wjyk7t/YGg==",
+      "file-share=bootstrap",
+      "share-directory=None"
+    ],
+    )
   }
+
   # The ordering of interaces assignewd here controls the PAN OS device mapping
   # 1st = mgmt0, 2nd = Ethernet1/1, 3rd = Ethernet 1/2
   primary_network_interface_id = azurerm_network_interface.myterraformniceth0.id
