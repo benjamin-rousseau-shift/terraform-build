@@ -284,8 +284,8 @@ resource "azurerm_route_table" "route-rets-web" {
   }
 
   route {
-    name                   = "ROUTE-TO-${var.IPAddressPrefix}.2.0-16"
-    address_prefix         = "${var.IPAddressPrefix}.2.0/16"
+    name                   = "ROUTE-TO-${var.IPAddressPrefix}.0.0-16"
+    address_prefix         = "${var.IPAddressPrefix}.0.0/16"
     next_hop_type          = "VirtualAppliance"
     next_hop_in_ip_address = "${var.IPAddressPrefix}.2.254"
   }
@@ -315,8 +315,8 @@ resource "azurerm_route_table" "route-rets-storage" {
   }
 
   route {
-    name                   = "ROUTE-TO-${var.IPAddressPrefix}.3.0-16"
-    address_prefix         = "${var.IPAddressPrefix}.3.0/16"
+    name                   = "ROUTE-TO-${var.IPAddressPrefix}.0.0-16"
+    address_prefix         = "${var.IPAddressPrefix}.0.0/16"
     next_hop_type          = "VirtualAppliance"
     next_hop_in_ip_address = "${var.IPAddressPrefix}.3.254"
   }
@@ -346,8 +346,8 @@ resource "azurerm_route_table" "route-rets-dbcp" {
   }
 
   route {
-    name                   = "ROUTE-TO-${var.IPAddressPrefix}.4.0-16"
-    address_prefix         = "${var.IPAddressPrefix}.4.0/16"
+    name                   = "ROUTE-TO-${var.IPAddressPrefix}.0.0-16"
+    address_prefix         = "${var.IPAddressPrefix}.0.0/16"
     next_hop_type          = "VirtualAppliance"
     next_hop_in_ip_address = "${var.IPAddressPrefix}.4.254"
   }
@@ -377,8 +377,8 @@ resource "azurerm_route_table" "route-rets-mgt" {
   }
 
   route {
-    name                   = "ROUTE-TO-${var.IPAddressPrefix}.7.0-16"
-    address_prefix         = "${var.IPAddressPrefix}.7.0/16"
+    name                   = "ROUTE-TO-${var.IPAddressPrefix}.0.0-16"
+    address_prefix         = "${var.IPAddressPrefix}.0.0/16"
     next_hop_type          = "VirtualAppliance"
     next_hop_in_ip_address = "${var.IPAddressPrefix}.7.254"
   }
