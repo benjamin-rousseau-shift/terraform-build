@@ -56,8 +56,8 @@ resource "azurerm_recovery_services_vault" "myvault-client" {
 # Create Client Backup Policy
 resource "azurerm_backup_policy_vm" "myvault-policy-client" {
   name                = "${var.enterprise}-${var.environment}-${var.region}-${var.client}-BKP-POLICY"
-  resource_group_name = azurerm_resource_group.myterraformgroup-client
-  recovery_vault_name = azurerm_recovery_services_vault.myvault-client
+  resource_group_name = azurerm_resource_group.myterraformgroup-client.name
+  recovery_vault_name = azurerm_recovery_services_vault.myvault-client.name
 
   timezone = "Romance Standard Time"
 
