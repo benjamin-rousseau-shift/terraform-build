@@ -464,7 +464,7 @@ resource "azurerm_virtual_machine" "myterraformvm" {
     # Using a pay as you go license set sku to "bundle2"
     # To use a purchased license change sku to "byol"
     sku       = "bundle2"
-    version   = "9.1.10"
+    version   = "9.1.0"
   }
 
   storage_os_disk {
