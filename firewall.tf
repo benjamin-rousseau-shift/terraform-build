@@ -127,19 +127,19 @@ resource "azurerm_public_ip" "myterraformpublicipuntrust" {
 
 # Accept Terms for the PAN OS Image
 resource "azurerm_marketplace_agreement" "panosimage" {
-  publisher ="paloaltonetworks"
+  publisher = "paloaltonetworks"
   offer     = "vmseries1"
-  plan       = "bundle2"
+  plan      = "bundle2"
 }
 
 # Create virtual machine
 resource "azurerm_virtual_machine" "myterraformvm" {
   name = var.FirewallVmName
 
-  location              = var.azurelocation
-  resource_group_name   = azurerm_resource_group.myterraformgroup.name
-  vm_size                  = "Standard_D4_v2"
-  depends_on = [azurerm_marketplace_agreement.panosimage]
+  location            = var.azurelocation
+  resource_group_name = azurerm_resource_group.myterraformgroup.name
+  vm_size             = "Standard_D4_v2"
+  depends_on          = [azurerm_marketplace_agreement.panosimage]
 
   storage_image_reference {
     publisher = "paloaltonetworks"
@@ -169,21 +169,23 @@ resource "azurerm_virtual_machine" "myterraformvm" {
     computer_name  = var.FirewallVmName
     admin_username = "windu"
     admin_password = var.admin_password
-    custom_data = join(
+    custom_data    = base64encode(
+    join(
     ",",
     [
-      "storage-account=shift0central0bootstrap",
-      "access-key=${var.storage_access_key}",
-      "file-share=bootstrap",
-      "share-directory=None"
+      "storage-account=${azurerm_storage_account.bootstrap-storage-acct.name}",
+      "access-key=${azurerm_storage_account.bootstrap-storage-acct.primary_access_key}",
+      "file-share=${azurerm_storage_share.bootstrap-storage-share.name}",
+      "share-directory=${azurerm_storage_share_directory.config.name}"
     ],
+    )
     )
   }
 
   # The ordering of interaces assignewd here controls the PAN OS device mapping
   # 1st = mgmt0, 2nd = Ethernet1/1, 3rd = Ethernet 1/2
   primary_network_interface_id = azurerm_network_interface.myterraformniceth0.id
-  network_interface_ids = [
+  network_interface_ids        = [
     azurerm_network_interface.myterraformniceth0.id, azurerm_network_interface.myterraformniceth1.id,
     azurerm_network_interface.myterraformniceth2.id, azurerm_network_interface.myterraformniceth3.id,
     azurerm_network_interface.myterraformniceth4.id, azurerm_network_interface.myterraformniceth5.id,
@@ -195,14 +197,14 @@ resource "azurerm_virtual_machine" "myterraformvm" {
   }
 
   boot_diagnostics {
-    enabled = true
+    enabled     = true
     storage_uri = azurerm_storage_account.mystorageaccount.primary_blob_endpoint
   }
 
   tags = {
-    TYPE = "FIREWALL"
-    PROJECT = var.project
-    LOCATION = "${var.environment}-${var.region}"
+    TYPE        = "FIREWALL"
+    PROJECT     = var.project
+    LOCATION    = "${var.environment}-${var.region}"
     ENVIRONMENT = "INTERNAL-PROD"
   }
 }
