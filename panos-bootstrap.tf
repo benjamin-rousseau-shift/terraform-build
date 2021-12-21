@@ -1,17 +1,8 @@
-# Create Storage Account, File Share and Directories
-resource "azurerm_storage_account" "bootstrap-storage-acct" {
+# Create Upload new init-cfg file to bootstrap share.
 
-  name                     = "${lower(var.enterprise)}0${lower(var.environment)}0${lower(var.region)}0bootstrap"
-  resource_group_name      = azurerm_resource_group.myterraformgroup.name
-  location                 = var.azurelocation
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
-}
-
-resource "azurerm_storage_share" "bootstrap-storage-share" {
-  name                 = "bootstrap"
-  storage_account_name = azurerm_storage_account.bootstrap-storage-acct.name
-  quota                = 50
+data "azurerm_storage_account" "bootstrap-storage-acct" {
+  name = var.bootstrap_storage_account
+  resource_group_name = var.bootstrap_resource_group
 }
 
 resource "azurerm_storage_share_directory" "nonconfig" {
@@ -23,14 +14,14 @@ resource "azurerm_storage_share_directory" "nonconfig" {
   ])
 
   name                 = each.key
-  share_name           = azurerm_storage_share.bootstrap-storage-share.name
-  storage_account_name = azurerm_storage_account.bootstrap-storage-acct.name
+  share_name           = var.bootstrap_storage_share
+  storage_account_name = data.azurerm_storage_account.bootstrap-storage-acct.name
 }
 
 resource "azurerm_storage_share_directory" "config" {
   name                 = "config"
-  share_name           = azurerm_storage_share.bootstrap-storage-share.name
-  storage_account_name = azurerm_storage_account.bootstrap-storage-acct.name
+  share_name           = var.bootstrap_storage_share
+  storage_account_name = data.azurerm_storage_account.bootstrap-storage-acct.name
 }
 
 resource "azurerm_storage_share_file" "this" {
@@ -38,7 +29,7 @@ resource "azurerm_storage_share_file" "this" {
 
   name             = regex("[^/]*$", each.value)
   path             = replace(each.value, "/[/]*[^/]*$/", "")
-  storage_share_id = azurerm_storage_share.bootstrap-storage-share.id
+  storage_share_id = data.azurerm_storage_account.bootstrap-storage-acct.id
   source           = replace(each.key, "/CalculateMe[X]${random_id.this[each.key].id}/", "CalculateMeX${random_id.this[each.key].id}")
   # Live above is equivalent to:   `source = each.key`  but it re-creates the file every time the content changes.
   # The replace() is not actually doing anything, except tricking Terraform to destroy a resource.

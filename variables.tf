@@ -67,3 +67,6 @@ variable "tenant_id" {}
 variable "client_secret" {}
 variable "subscription_id" {}
 variable "admin_password" {}
+variable "bootstrap_storage_account" {}
+variable "bootstrap_resource_group" {}
+variable "bootstrap_storage_share" { default = "boostrap" }
