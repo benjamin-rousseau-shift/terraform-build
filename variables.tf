@@ -1,54 +1,44 @@
 variable "region" {
-  type = string
+  type    = string
   default = "FR2"
 }
-
 variable "environment" {
-  type = string
+  type    = string
   default = "AZ"
 
 }
-
 variable "storage_access_key" {}
 
 variable "backup_management_id" {
-  type = string
+  type    = string
   default = "ac4ce12d-aeb1-4718-992f-768486206f0e"
 }
-
 variable "enterprise" {
-  type = string
+  type    = string
   default = "SH"
 }
-
 variable "project" {
-  type = string
+  type    = string
   default = "PAFW"
 }
-
 variable "intl_project" {
-  type = string
+  type    = string
   default = "INTL"
 }
-
 variable "client" {
-  type = string
+  type    = string
   default = "RETS"
 }
-
 variable "azurelocation" {
-  type = string
+  type    = string
   default = "francecentral"
 }
-
 variable "IPAddressPrefix" {
   default = "10.99"
 }
-
 variable "FirewallVmName" {
   default = "shazfr2pafw1"
 }
-
 variable "files" {
   description = <<-EOF
   Map of all files to copy to bucket. The keys are local paths, the values are remote paths.
@@ -72,12 +62,8 @@ variable "files_md5" {
   default     = {}
   type        = map(string)
 }
-
-
 variable "client_id" {}
 variable "tenant_id" {}
 variable "client_secret" {}
 variable "subscription_id" {}
 variable "admin_password" {}
-variable "ov_pa_pub" {}
-variable "ov_pa_psk" {}

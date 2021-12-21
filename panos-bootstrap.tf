@@ -8,8 +8,6 @@ resource "azurerm_storage_account" "bootstrap-storage-acct" {
   account_replication_type = "LRS"
 }
 
-
-
 resource "azurerm_storage_share" "bootstrap-storage-share" {
   name                 = "bootstrap"
   storage_account_name = azurerm_storage_account.bootstrap-storage-acct.name
