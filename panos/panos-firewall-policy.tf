@@ -26,7 +26,7 @@ resource "panos_nat_rule_group" "internet" {
 }
 
 # SEC Rules
-resource "panos_security_policy" "panorama" {
+resource "panos_security_policy_group" "panorama" {
   rule {
     name                  = "PERMIT ACCESS TO PANORAMA LOCAL"
     source_zones          = [panos_zone.internal.name, panos_zone.vpn_s2s.name]
@@ -42,7 +42,7 @@ resource "panos_security_policy" "panorama" {
   }
 }
 
-resource "panos_security_policy" "vpn_s2s" {
+resource "panos_security_policy_group" "vpn_s2s" {
   rule {
     name                  = "PERMIT VPN-S2S LOCAL"
     source_zones          = [panos_zone.untrust.name]
