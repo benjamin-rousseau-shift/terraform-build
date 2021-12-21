@@ -9,6 +9,10 @@ terraform {
       source  = "hashicorp/azuread"
       version = "~>2.0"
     }
+    panos = {
+      source = "paloaltonetworks/panos"
+      version = "1.8.3"
+    }
   }
 }
 provider "azurerm" {
