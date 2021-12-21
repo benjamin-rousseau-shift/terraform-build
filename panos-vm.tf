@@ -169,8 +169,7 @@ resource "azurerm_virtual_machine" "myterraformvm" {
     computer_name  = var.FirewallVmName
     admin_username = "windu"
     admin_password = var.admin_password
-    custom_data    = base64encode(
-    join(
+    custom_data    = join(
     ",",
     [
       "storage-account=${azurerm_storage_account.bootstrap-storage-acct.name}",
@@ -178,7 +177,6 @@ resource "azurerm_virtual_machine" "myterraformvm" {
       "file-share=${azurerm_storage_share.bootstrap-storage-share.name}",
       "share-directory=${azurerm_storage_share_directory.config.name}"
     ],
-    )
     )
   }
 
