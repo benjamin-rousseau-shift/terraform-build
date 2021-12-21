@@ -32,7 +32,7 @@ resource "panos_ipsec_tunnel" "ov_pa_ipsec" {
 resource "panos_ipsec_tunnel_proxy_id_ipv4" "ov_pa_proxy_id" {
   ipsec_tunnel = panos_ipsec_tunnel.ov_pa_ipsec.name
   name = "PROXY-ID-OV-PA"
-  local = "${var.IPAddressPrefix.0.0/16}"
+  local = "${var.IPAddressPrefix}.0.0/16"
   remote = "10.2.0.0/16"
   protocol_any = true
 }
