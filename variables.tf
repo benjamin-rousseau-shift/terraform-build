@@ -7,7 +7,6 @@ variable "environment" {
   default = "AZ"
 
 }
-variable "storage_access_key" {}
 
 variable "backup_management_id" {
   type    = string
