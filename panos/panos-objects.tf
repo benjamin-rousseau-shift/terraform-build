@@ -10,3 +10,9 @@ resource "panos_address_object" "local_mgmt" {
   value       = "${var.IPAddressPrefix}.0.254"
   description = ""
 }
+
+# Zone Protection Profile
+resource "panos_dos_protection_profile" "default" {
+  name        = "Zone Protection Profile"
+  description = ""
+}

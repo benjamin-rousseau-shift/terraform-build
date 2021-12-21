@@ -46,7 +46,7 @@ resource "panos_ethernet_interface" "eth6" {
 resource "panos_ike_crypto_profile" "default" {
   name                    = "AES-128-SHA256-G2-86400"
   dh_groups               = ["group2"]
-  authentications         = ["SHA256"]
+  authentications         = ["sha256"]
   encryptions             = ["aes-128-cbc"]
   lifetime_value          = 24
   authentication_multiple = 0
@@ -174,7 +174,7 @@ resource "panos_zone" "untrust" {
     panos_ethernet_interface.eth1.name
   ]
   enable_user_id = false
-  zone_profile   = "temp"
+  zone_profile   = panos_dos_protection_profile.default.name
 }
 
 resource "panos_zone" "vpn_s2s" {
