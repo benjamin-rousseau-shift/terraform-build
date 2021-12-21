@@ -25,7 +25,6 @@ resource "panos_ipsec_tunnel" "ov_pa_ipsec" {
   anti_replay = true
   ak_ike_gateway = panos_ike_gateway.ov_pa_ike.name
   ak_ipsec_crypto_profile = panos_ipsec_crypto_profile.default.name
-  tunnel_monitor_proxy_id = panos_ipsec_tunnel_proxy_id_ipv4.ov_pa_proxy_id.name
 }
 
 # Proxy ID IPSec
