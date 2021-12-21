@@ -8,7 +8,6 @@ variable "environment" {
   default = "AZ"
 
 }
-variable "storage_access_key" {}
 variable "enterprise" {
   type = string
   default = "SH"
@@ -27,10 +26,6 @@ variable "IPAddressPrefix" {
 variable "FirewallVmName" {
   default = "shazfr2pafw1"
 }
-variable "client_id" {}
-variable "tenant_id" {}
-variable "client_secret" {}
-variable "subscription_id" {}
 variable "admin_password" {}
 variable "ov_pa_pub" {}
 variable "ov_pa_psk" {}
