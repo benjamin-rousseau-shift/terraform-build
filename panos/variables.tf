@@ -36,3 +36,5 @@ variable "ov_pa_pub" {}
 variable "ov_pa_psk" {}
 variable "panos_pub_mgmt" {}
 variable "panos_pub_untrust" {}
+variable "panorama" {}
+variable "domain_controller" {}

@@ -30,11 +30,11 @@ resource "panos_security_policy" "panorama" {
   rule {
     name                  = "PERMIT ACCESS TO PANORAMA LOCAL"
     source_zones          = [panos_zone.internal.name, panos_zone.vpn_s2s.name]
-    source_addresses      = ["10.2.2.1", panos_address_object.local_mgmt.name]
+    source_addresses      = [var.panorama, panos_address_object.local_mgmt.name]
     source_users          = ["any"]
     hip_profiles          = ["any"]
     destination_zones     = [panos_zone.internal.name, panos_zone.vpn_s2s.name]
-    destination_addresses = ["10.2.2.1", panos_address_object.local_mgmt.name]
+    destination_addresses = [var.panorama, panos_address_object.local_mgmt.name]
     applications          = ["paloalto-updates", "paloalto-userid-agent", "panorama", "ssl"]
     services              = ["any"]
     categories            = ["any"]
