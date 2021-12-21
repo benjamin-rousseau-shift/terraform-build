@@ -105,7 +105,7 @@ resource "panos_static_route_ipv4" "default" {
   name           = "DEFAULT-ROUTE"
   virtual_router = panos_virtual_router.default.name
   destination    = "0.0.0.0/0"
-  Type           = "ip-address"
+  type           = "ip-address"
   next_hop       = "${var.IPAddressPrefix}.1.1"
 }
 resource "panos_static_route_ipv4" "ov_pa" {
@@ -113,7 +113,7 @@ resource "panos_static_route_ipv4" "ov_pa" {
   virtual_router = panos_virtual_router.default.name
   destination    = "10.2.0.0/16"
   interface      = panos_tunnel_interface.ov_pa.name
-  type           = "None"
+  type           = ""
 }
 
 # Tunnel Interface
