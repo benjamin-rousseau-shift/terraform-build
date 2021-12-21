@@ -50,7 +50,6 @@ resource "panos_ike_crypto_profile" "default" {
   encryptions             = ["aes-128-cbc"]
   lifetime_value          = 24
   authentication_multiple = 0
-  depends_on              = [azurerm_virtual_machine.myterraformvm]
 }
 
 #IPSec Crypto Profile

@@ -8,10 +8,10 @@ resource "panos_ike_gateway" "ov_pa_ike" {
   version                = "ikev2"
   interface              = "ethernet1/1"
   local_ip_address_type  = "ip"
-  local_ip_address_value = azurerm_public_ip.myterraformpublicipuntrust.ip_address
+  local_ip_address_value = var.panos_pub_untrust
   pre_shared_key         = var.ov_pa_psk
   local_id_type          = "ipaddr"
-  local_id_value         = azurerm_public_ip.myterraformpublicipuntrust.ip_address
+  local_id_value         = var.panos_pub_untrust
   peer_id_type           = "ipaddr"
   peer_id_value          = var.ov_pa_pub
   ikev2_crypto_profile   = panos_ike_crypto_profile.default.name
