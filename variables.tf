@@ -68,4 +68,4 @@ variable "subscription_id" {}
 variable "admin_password" {}
 variable "bootstrap_storage_account" {}
 variable "bootstrap_resource_group" {}
-variable "bootstrap_storage_share" { default = "boostrap" }
+variable "bootstrap_storage_share" { default = "bootstrap" }
