@@ -174,7 +174,7 @@ resource "azurerm_virtual_machine" "myterraformvm" {
     [
       "storage-account=${data.azurerm_storage_account.bootstrap-storage-acct.name}",
       "access-key=${data.azurerm_storage_account.bootstrap-storage-acct.primary_access_key}",
-      "file-share=${var.bootstrap_storage_share}",
+      "file-share=${data.azurerm_storage_share.bootstrap-storage-share.name}",
       "share-directory=None"
     ],
     )
