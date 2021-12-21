@@ -25,3 +25,9 @@ provider "azuread" {
   client_secret   = var.client_secret
   tenant_id       = var.tenant_id
 }
+
+provider "panos" {
+  hostname = azurerm_public_ip.myterraformpublicipmgmt.ip_address
+  username = "windu"
+  password = var.admin_password
+}
