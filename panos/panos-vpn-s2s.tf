@@ -8,7 +8,7 @@ resource "panos_ike_gateway" "ov_pa_ike" {
   version                = "ikev2"
   interface              = "ethernet1/1"
   local_ip_address_type  = "ip"
-  local_ip_address_value = var.panos_pub_untrust
+  local_ip_address_value = panos_ethernet_interface.eth1.static_ips[0]
   pre_shared_key         = var.ov_pa_psk
   local_id_type          = "ipaddr"
   local_id_value         = var.panos_pub_untrust
