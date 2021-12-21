@@ -5,7 +5,7 @@ resource "azurerm_resource_group" "myterraformgroup-client" {
 
   tags = {
     TYPE     = "RESOURCE-GROUP"
-    PROJECT  = var.project
+    PROJECT  = var.client
     LOCATION = "${var.environment}-${var.region}"
   }
 }

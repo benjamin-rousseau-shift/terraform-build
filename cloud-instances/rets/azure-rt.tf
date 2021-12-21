@@ -2,7 +2,7 @@
 resource "azurerm_route_table" "route-client-web" {
   name                          = "${var.enterprise}-${var.environment}-${var.region}-${var.client}-WEB-RT"
   location                      = var.azurelocation
-  resource_group_name           = azurerm_resource_group.myterraformgroup.name
+  resource_group_name           = data.azurerm_resource_group.pafw_rg.name
   disable_bgp_route_propagation = false
   depends_on = [azurerm_subnet.myterraformsubnet-client-web]
 
