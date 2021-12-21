@@ -5,22 +5,14 @@ data "azurerm_storage_account" "bootstrap-storage-acct" {
   resource_group_name = var.bootstrap_resource_group
 }
 
-resource "azurerm_storage_share_directory" "nonconfig" {
-  for_each = toset([
-    "content",
-    "software",
-    "plugins",
-    "license"
-  ])
-
-  name                 = each.key
-  share_name           = var.bootstrap_storage_share
+data "azurerm_storage_share" "bootstrap-storage-share" {
+  name = var.bootstrap_storage_share
   storage_account_name = data.azurerm_storage_account.bootstrap-storage-acct.name
 }
 
-resource "azurerm_storage_share_directory" "config" {
+data "azurerm_storage_share_directory" "config" {
   name                 = "config"
-  share_name           = var.bootstrap_storage_share
+  share_name           = data.azurerm_storage_share.bootstrap-storage-share.name
   storage_account_name = data.azurerm_storage_account.bootstrap-storage-acct.name
 }
 
@@ -29,14 +21,14 @@ resource "azurerm_storage_share_file" "this" {
 
   name             = regex("[^/]*$", each.value)
   path             = replace(each.value, "/[/]*[^/]*$/", "")
-  storage_share_id = data.azurerm_storage_account.bootstrap-storage-acct.id
+  storage_share_id = data.azurerm_storage_share.bootstrap-storage-share.id
   source           = replace(each.key, "/CalculateMe[X]${random_id.this[each.key].id}/", "CalculateMeX${random_id.this[each.key].id}")
   # Live above is equivalent to:   `source = each.key`  but it re-creates the file every time the content changes.
   # The replace() is not actually doing anything, except tricking Terraform to destroy a resource.
   # There is a field content_md5 designed specifically for that. But I see a bug in the provider (last seen in 2.76):
   # When content_md5 changes the re-uploading seemingly succeeds, result being however a totally empty file (size zero).
   # Workaround: use random_id above to cause the full destroy/create of a file.
-  depends_on = [azurerm_storage_share_directory.config, azurerm_storage_share_directory.nonconfig]
+  depends_on = [data.azurerm_storage_share_directory.config]
 }
 
 resource "random_id" "this" {
