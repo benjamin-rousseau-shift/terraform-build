@@ -16,6 +16,7 @@ resource "panos_ike_gateway" "ov_pa_ike" {
   peer_id_value          = var.ov_pa_pub
   ikev2_crypto_profile   = panos_ike_crypto_profile.default.name
   enable_nat_traversal   = true
+  nat_traversal_keep_alive = 10
 }
 
 # Phase 2 IPSEC
