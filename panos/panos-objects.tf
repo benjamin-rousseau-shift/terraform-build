@@ -7,6 +7,6 @@ resource "panos_address_object" "local_range" {
 
 resource "panos_address_object" "local_mgmt" {
   name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-${var.project}1_${var.IPAddressPrefix}.5.254"
-  value       = "${var.IPAddressPrefix}.0.254"
+  value       = "${var.IPAddressPrefix}.5.254"
   description = ""
 }
