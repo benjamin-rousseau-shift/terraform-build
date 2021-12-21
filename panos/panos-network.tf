@@ -12,6 +12,7 @@ resource "panos_ethernet_interface" "eth2" {
   mode       = "layer3"
   static_ips = ["${var.IPAddressPrefix}.2.254/24"]
   comment    = "WEB Interface"
+  management_profile = panos_management_profile.ping.name
 }
 resource "panos_ethernet_interface" "eth3" {
   name       = "ethernet1/3"
@@ -19,6 +20,7 @@ resource "panos_ethernet_interface" "eth3" {
   mode       = "layer3"
   static_ips = ["${var.IPAddressPrefix}.3.254/24"]
   comment    = "STORAGE Interface"
+  management_profile = panos_management_profile.ping.name
 }
 resource "panos_ethernet_interface" "eth4" {
   name       = "ethernet1/4"
@@ -26,6 +28,7 @@ resource "panos_ethernet_interface" "eth4" {
   mode       = "layer3"
   static_ips = ["${var.IPAddressPrefix}.4.254/24"]
   comment    = "DBCP Interface"
+  management_profile = panos_management_profile.ping.name
 }
 resource "panos_ethernet_interface" "eth5" {
   name       = "ethernet1/5"
@@ -33,6 +36,7 @@ resource "panos_ethernet_interface" "eth5" {
   mode       = "layer3"
   static_ips = ["${var.IPAddressPrefix}.5.254/24"]
   comment    = "INTERNAL-SRV Interface"
+  management_profile = panos_management_profile.default.name
 }
 resource "panos_ethernet_interface" "eth6" {
   name       = "ethernet1/6"
@@ -40,6 +44,7 @@ resource "panos_ethernet_interface" "eth6" {
   mode       = "layer3"
   static_ips = ["${var.IPAddressPrefix}.7.254/24"]
   comment    = "MGT Interface"
+  management_profile = panos_management_profile.ping.name
 }
 
 # IKE Crypto Profile
@@ -174,7 +179,7 @@ resource "panos_zone" "untrust" {
     panos_ethernet_interface.eth1.name
   ]
   enable_user_id = false
-  zone_profile   = panos_dos_protection_profile.default.name
+  #zone_profile   = panos_dos_protection_profile.default.name
 }
 
 resource "panos_zone" "vpn_s2s" {
