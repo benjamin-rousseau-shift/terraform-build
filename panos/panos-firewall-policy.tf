@@ -1,5 +1,5 @@
 # NAT Rules
-resource "panos_nat_rule_group" "internet" {
+resource "panos_nat_rule_group" "default" {
   rule {
     name = "NAT INTERNET ACCESS"
     original_packet {
@@ -26,7 +26,7 @@ resource "panos_nat_rule_group" "internet" {
 }
 
 # SEC Rules
-resource "panos_security_policy_group" "panorama" {
+resource "panos_security_policy_group" "default" {
   rule {
     name                  = "PERMIT ACCESS TO PANORAMA LOCAL"
     source_zones          = [panos_zone.internal.name, panos_zone.vpn_s2s.name]
@@ -40,9 +40,7 @@ resource "panos_security_policy_group" "panorama" {
     categories            = ["any"]
     action                = "allow"
   }
-}
 
-resource "panos_security_policy_group" "vpn_s2s" {
   rule {
     name                  = "PERMIT VPN-S2S LOCAL"
     source_zones          = [panos_zone.untrust.name]
