@@ -1,18 +1,28 @@
 # NAT Rules
-resource "panos_nat_rule" "example" {
-  name                  = "NAT INTERNET ACCESS"
-  source_zones          = [
-    panos_zone.dbcp.name, panos_zone.internal.name, panos_zone.mgt.name, panos_zone.storage.name, panos_zone.web.name
-  ]
-  destination_zone      = panos_zone.untrust.name
-  to_interface          = panos_ethernet_interface.eth1.name
-  source_addresses      = [panos_address_object.local_range.name]
-  destination_addresses = ["any"]
-  sat_type              = "dynamic-ip-and-port"
-  sat_address_type      = "interface-address"
-  sat_interface         = panos_ethernet_interface.eth1.name
-  sat_ip_address        = "${var.IPAddressPrefix}.1.254/24"
-  dat_type              = "none"
+resource "panos_nat_rule_group" "internet" {
+  rule {
+    name = "NAT INTERNET ACCESS"
+    original_packet {
+      source_zones          = [
+        panos_zone.dbcp.name, panos_zone.internal.name, panos_zone.mgt.name, panos_zone.storage.name, panos_zone.web.name
+      ]
+      destination_zone      = panos_zone.untrust.name
+      destination_interface = panos_ethernet_interface.eth1.name
+      source_addresses = [panos_address_object.local_range.name]
+      destination_addresses = ["any"]
+    }
+    translated_packet {
+      source {
+        dynamic_ip_and_port {
+          interface_address {
+            interface = panos_ethernet_interface.eth1.name
+            ip_address = "${var.IPAddressPrefix}.1.254/24"
+          }
+        }
+      }
+      destination {}
+    }
+  }
 }
 
 # SEC Rules
