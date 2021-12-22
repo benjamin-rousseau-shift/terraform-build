@@ -169,15 +169,15 @@ resource "azurerm_virtual_machine" "myterraformvm" {
     computer_name  = var.FirewallVmName
     admin_username = "windu"
     admin_password = var.admin_panos
-    custom_data    = join(
-    ",",
-    [
-      "storage-account=${data.azurerm_storage_account.bootstrap-storage-acct.name}",
-      "access-key=${data.azurerm_storage_account.bootstrap-storage-acct.primary_access_key}",
-      "file-share=${data.azurerm_storage_share.bootstrap-storage-share.name}",
-      "share-directory=None"
-    ],
-    )
+#    custom_data    = join(
+#    ",",
+#    [
+#      "storage-account=${data.azurerm_storage_account.bootstrap-storage-acct.name}",
+#      "access-key=${data.azurerm_storage_account.bootstrap-storage-acct.primary_access_key}",
+#      "file-share=${data.azurerm_storage_share.bootstrap-storage-share.name}",
+#      "share-directory=None"
+#    ],
+#    )
   }
 
   # The ordering of interaces assignewd here controls the PAN OS device mapping
