@@ -1,10 +1,10 @@
 
 
 resource "azurerm_kubernetes_cluster" "aks_web" {
-  name                = "${var.enterprise}-${var.environment}-${var.region}-AKS-WEB"
+  name                = "AKS-WEB"
   location            = azurerm_resource_group.aks-rg.location
   resource_group_name = azurerm_resource_group.aks-rg.name
-#   dns_prefix          = var.SHIFT_CLOUD_INSTANCE
+  dns_prefix          = "${var.enterprise}-${var.environment}-${var.region}"
   
 
   default_node_pool {
@@ -36,10 +36,10 @@ resource "azurerm_kubernetes_cluster" "aks_web" {
 
 
 resource "azurerm_kubernetes_cluster" "aks_worker" {
-  name                = "${var.enterprise}-${var.environment}-${var.region}-AKS-WORKER"
+  name                = "AKS-WORKER"
   location            = azurerm_resource_group.aks-rg.location
   resource_group_name = azurerm_resource_group.aks-rg.name
-#   dns_prefix          = var.SHIFT_CLOUD_INSTANCE
+  dns_prefix          = "${var.enterprise}-${var.environment}-${var.region}"
   
 
   default_node_pool {
