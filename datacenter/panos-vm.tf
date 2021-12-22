@@ -139,7 +139,7 @@ resource "azurerm_virtual_machine" "myterraformvm" {
   location            = var.azurelocation
   resource_group_name = azurerm_resource_group.myterraformgroup.name
   vm_size             = "Standard_D4_v2"
-  depends_on          = [azurerm_marketplace_agreement.panosimage]
+  depends_on          = [azurerm_marketplace_agreement.panosimage,azurerm_storage_share_file.bootstrap]
 
   storage_image_reference {
     publisher = "paloaltonetworks"

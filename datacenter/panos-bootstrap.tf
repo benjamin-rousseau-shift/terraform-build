@@ -1,5 +1,4 @@
-# Create Upload new init-cfg file to bootstrap share.
-
+# Gathering Bootstrap storage Account & File share data
 data "azurerm_storage_account" "bootstrap-storage-acct" {
   name                = var.bootstrap_storage_account
   resource_group_name = var.bootstrap_resource_group
@@ -107,7 +106,7 @@ resource "local_file" "bootstrap" {
                   <enabled>no</enabled>
                 </ndp-proxy>
                 <ip>
-                  <entry name="10.99.5.254/24"/>
+                  <entry name="${var.IPAddressPrefix}.5.254/24"/>
                 </ip>
                 <lldp>
                   <enable>no</enable>
@@ -322,37 +321,37 @@ resource "local_file" "bootstrap" {
             <service>
               <entry name="deployments">
                 <source>
-                  <address>10.99.5.254/24</address>
+                  <address>${var.IPAddressPrefix}.5.254/24</address>
                   <interface>ethernet1/5</interface>
                 </source>
               </entry>
               <entry name="dns">
                 <source>
-                  <address>10.99.5.254/24</address>
+                  <address>${var.IPAddressPrefix}.5.254/24</address>
                   <interface>ethernet1/5</interface>
                 </source>
               </entry>
               <entry name="ldap">
                 <source>
-                  <address>10.99.5.254/24</address>
+                  <address>${var.IPAddressPrefix}.5.254/24</address>
                   <interface>ethernet1/5</interface>
                 </source>
               </entry>
               <entry name="ntp">
                 <source>
-                  <address>10.99.5.254/24</address>
+                  <address>${var.IPAddressPrefix}.5.254/24</address>
                   <interface>ethernet1/5</interface>
                 </source>
               </entry>
               <entry name="panorama">
                 <source>
-                  <address>10.99.5.254/24</address>
+                  <address>${var.IPAddressPrefix}.5.254/24</address>
                   <interface>ethernet1/5</interface>
                 </source>
               </entry>
               <entry name="uid-agent">
                 <source>
-                  <address>10.99.5.254/24</address>
+                  <address>${var.IPAddressPrefix}.5.254/24</address>
                   <interface>ethernet1/5</interface>
                 </source>
               </entry>
@@ -411,4 +410,5 @@ resource "azurerm_storage_share_file" "bootstrap" {
   storage_share_id = data.azurerm_storage_share.bootstrap-storage-share.id
   source           = "${path.module}/bootstrap.xml"
   path = "config"
+  depends_on = [local_file.bootstrap]
 }
