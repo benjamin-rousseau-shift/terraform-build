@@ -26,7 +26,7 @@ variable "IPAddressPrefix" {
 variable "FirewallVmName" {
   default = "shazfr2pafw1"
 }
-variable "admin_password" {}
+variable "admin_panos" {}
 variable "ov_pa_pub" {}
 variable "ov_pa_psk" {}
 variable "panos_pub_mgmt" {}

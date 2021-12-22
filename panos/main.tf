@@ -8,9 +8,8 @@ terraform {
   }
 }
 
-
 provider "panos" {
   hostname = var.panos_pub_mgmt
   username = "windu"
-  password = var.admin_password
+  password = var.admin_panos
 }
