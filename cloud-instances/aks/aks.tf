@@ -1,7 +1,7 @@
 
 
 resource "azurerm_kubernetes_cluster" "aks_web" {
-  name                = "aks-${var.SHIFT_CLOUD_INSTANCE}-web"
+  name                = "${var.enterprise}-${var.environment}-${var.region}-AKS-WEB"
   location            = azurerm_resource_group.aks-rg.location
   resource_group_name = azurerm_resource_group.aks-rg.name
 #   dns_prefix          = var.SHIFT_CLOUD_INSTANCE
@@ -36,7 +36,7 @@ resource "azurerm_kubernetes_cluster" "aks_web" {
 
 
 resource "azurerm_kubernetes_cluster" "aks_worker" {
-  name                = "aks-${var.SHIFT_CLOUD_INSTANCE}-worker"
+  name                = "${var.enterprise}-${var.environment}-${var.region}-AKS-WORKER"
   location            = azurerm_resource_group.aks-rg.location
   resource_group_name = azurerm_resource_group.aks-rg.name
 #   dns_prefix          = var.SHIFT_CLOUD_INSTANCE
