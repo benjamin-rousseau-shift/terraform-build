@@ -108,23 +108,6 @@ resource "azurerm_network_interface_security_group_association" "sec_association
   network_security_group_id = azurerm_network_security_group.myterraformnsg.id
 }
 
-# Create public IPs
-resource "azurerm_public_ip" "myterraformpublicipmgmt" {
-  name                = "${lower(var.enterprise)}-${lower(var.environment)}-${lower(var.region)}-pafw-pub-ip-mgmt"
-  location            = var.azurelocation
-  resource_group_name = azurerm_resource_group.myterraformgroup.name
-  allocation_method   = "Static"
-
-}
-
-resource "azurerm_public_ip" "myterraformpublicipuntrust" {
-  name                = "${lower(var.enterprise)}-${lower(var.environment)}-${lower(var.region)}-pafw-pub-ip-untrust"
-  location            = var.azurelocation
-  resource_group_name = azurerm_resource_group.myterraformgroup.name
-  allocation_method   = "Static"
-
-}
-
 # Accept Terms for the PAN OS Image
 resource "azurerm_marketplace_agreement" "panosimage" {
   publisher = "paloaltonetworks"

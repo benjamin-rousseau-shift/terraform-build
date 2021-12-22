@@ -44,3 +44,19 @@ resource "azurerm_storage_account" "mystorageaccount-pafw" {
   }
 }
 
+# Create public IPs
+resource "azurerm_public_ip" "myterraformpublicipmgmt" {
+  name                = "${lower(var.enterprise)}-${lower(var.environment)}-${lower(var.region)}-${lower(var.project)}1-pub-ip-mgmt"
+  location            = var.azurelocation
+  resource_group_name = azurerm_resource_group.myterraformgroup.name
+  allocation_method   = "Static"
+
+}
+
+resource "azurerm_public_ip" "myterraformpublicipuntrust" {
+  name                = "${lower(var.enterprise)}-${lower(var.environment)}-${lower(var.region)}-${lower(var.project)}1-pub-ip-untrust"
+  location            = var.azurelocation
+  resource_group_name = azurerm_resource_group.myterraformgroup.name
+  allocation_method   = "Static"
+
+}

@@ -12,7 +12,7 @@ variable "enterprise" {
   type = string
   default = "SH"
 }
-variable "project" {
+variable "pafw" {
   type = string
   default = "PAFW"
 }
@@ -33,3 +33,7 @@ variable "panos_pub_mgmt" {}
 variable "panos_pub_untrust" {}
 variable "panorama" {}
 variable "domain_controller" {}
+variable "client_id" {}
+variable "tenant_id" {}
+variable "client_secret" {}
+variable "subscription_id" {}

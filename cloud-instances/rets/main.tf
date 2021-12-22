@@ -30,12 +30,6 @@ provider "azuread" {
   tenant_id       = var.tenant_id
 }
 
-provider "panos" {
-  hostname = var.panos_pub_ip
-  username = "windu"
-  password = var.admin_password
-}
-
 # Gathering Data from Datacenter
 data "azurerm_resource_group" "pafw_rg" {
   name = "${var.enterprise}-${var.environment}-${var.region}-${var.pafw}-RG"
@@ -44,4 +38,15 @@ data "azurerm_resource_group" "pafw_rg" {
 data "azurerm_virtual_network" "pafw_vnet" {
   name = "${var.enterprise}-${var.environment}-${var.region}-SUB"
   resource_group_name = data.azurerm_resource_group.pafw_rg.name
+}
+
+data azurerm_public_ip "panos_pub_mgmt" {
+  name                = "${lower(var.enterprise)}-${lower(var.environment)}-${lower(var.region)}-${lower(var.pafw)}1-pub-ip-mgmt"
+  resource_group_name = "${var.enterprise}-${var.environment}-${var.region}-${var.pafw}-RG"
+}
+
+provider "panos" {
+  hostname = data.azurerm_public_ip.panos_pub_mgmt.ip_address
+  username = "windu"
+  password = var.admin_password
 }
