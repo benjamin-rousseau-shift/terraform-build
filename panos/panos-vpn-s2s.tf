@@ -11,7 +11,7 @@ resource "panos_ike_gateway" "ov_pa_ike" {
   local_ip_address_value = panos_ethernet_interface.eth1.static_ips[0]
   pre_shared_key         = var.ov_pa_psk
   local_id_type          = "ipaddr"
-  local_id_value         = var.panos_pub_untrust
+  local_id_value         = data.azurerm_public_ip.panos_pub_untrust.ip_address
   peer_id_type           = "ipaddr"
   peer_id_value          = var.ov_pa_pub
   ikev2_crypto_profile   = panos_ike_crypto_profile.default.name

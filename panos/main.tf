@@ -26,6 +26,11 @@ data azurerm_public_ip "panos_pub_mgmt" {
   resource_group_name = "${var.enterprise}-${var.environment}-${var.region}-${var.pafw}-RG"
 }
 
+data azurerm_public_ip "panos_pub_untrust" {
+  name                = "${lower(var.enterprise)}-${lower(var.environment)}-${lower(var.region)}-${lower(var.pafw)}1-pub-ip-untrust"
+  resource_group_name = "${var.enterprise}-${var.environment}-${var.region}-${var.pafw}-RG"
+}
+
 provider "panos" {
   hostname = data.azurerm_public_ip.panos_pub_mgmt.ip_address
   username = "windu"
