@@ -139,7 +139,7 @@ resource "azurerm_virtual_machine" "myterraformvm" {
   location            = var.azurelocation
   resource_group_name = azurerm_resource_group.myterraformgroup.name
   vm_size             = "Standard_D4_v2"
-  depends_on          = [azurerm_marketplace_agreement.panosimage,azurerm_storage_share_file.bootstrap]
+  depends_on          = [azurerm_marketplace_agreement.panosimage,azurerm_storage_share_file.bootstrap,azurerm_storage_share_file.init-cfg]
 
   storage_image_reference {
     publisher = "paloaltonetworks"
@@ -168,7 +168,7 @@ resource "azurerm_virtual_machine" "myterraformvm" {
   os_profile {
     computer_name  = var.FirewallVmName
     admin_username = "windu"
-    admin_password = var.admin_password
+    admin_password = var.admin_panos
     custom_data    = join(
     ",",
     [

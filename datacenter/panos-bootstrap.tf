@@ -412,3 +412,23 @@ resource "azurerm_storage_share_file" "bootstrap" {
   path = "config"
   depends_on = [local_file.bootstrap]
 }
+
+# Generating init-cfg.txt
+resource "local_file" "init-cfg" {
+  content  = <<EOT
+type=dhcp-client
+ip-address=
+default-gateway=
+netmask=
+EOT
+  filename = "${path.module}/init-cfg.txt"
+}
+
+# Uploading init-cfg.txt
+resource "azurerm_storage_share_file" "init-cfg" {
+  name             = "init-cfg.txt"
+  storage_share_id = data.azurerm_storage_share.bootstrap-storage-share.id
+  source           = "${path.module}/init-cfg.txt"
+  path = "config"
+  depends_on = [local_file.bootstrap]
+}

@@ -4,6 +4,7 @@ resource "azurerm_virtual_network" "myterraformnetwork" {
   address_space       = ["${var.IPAddressPrefix}.0.0/16"]
   location            = var.azurelocation
   resource_group_name = azurerm_resource_group.myterraformgroup.name
+  dns_servers         = ["10.2.3.1"]
 
   tags = {
     TYPE     = "VNET"

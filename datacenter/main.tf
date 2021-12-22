@@ -33,5 +33,5 @@ provider "azuread" {
 provider "panos" {
   hostname = azurerm_public_ip.myterraformpublicipmgmt.ip_address
   username = "windu"
-  password = var.admin_password
+  password = var.admin_panos
 }
