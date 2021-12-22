@@ -19,7 +19,8 @@ resource "random_string" "password" {
 
 # Create Service Principal password
 resource "azuread_service_principal_password" "app" {
-  end_date             = "2299-12-30T23:00:00Z"                        # Forever
+  end_date             = "2299-12-30T23:00:00Z"
   service_principal_id = "${azuread_service_principal.adapp-client-sp.id}"
   value                = "${random_string.password.result}"
+  depends_on = [azuread_service_principal.adapp-client-sp,random_string.password]
 }
