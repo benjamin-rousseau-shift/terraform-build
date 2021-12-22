@@ -34,6 +34,11 @@ variable "azurelocation" {
 variable "IPAddressPrefix" {
   default = "10.99"
 }
+variable "AKSAddressPrefix" {
+  type = string
+  default = "10.100"
+}
+
 variable "FirewallVmName" {
   default = "shazfr2pafw1"
 }

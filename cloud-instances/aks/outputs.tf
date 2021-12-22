@@ -55,3 +55,8 @@ output "aks_worker_cluster_username" {
 output "aks_worker_cluster_password" {
   value = azurerm_kubernetes_cluster.aks_worker.kube_config.0.password
 }
+
+output "sp_password" {
+  value = "${azuread_service_principal_password.app.value}"
+  sensitive = true
+}
