@@ -5,7 +5,7 @@ resource "azurerm_kubernetes_cluster" "aks_web" {
   location            = azurerm_resource_group.aks-rg.location
   resource_group_name = azurerm_resource_group.aks-rg.name
   dns_prefix          = "${var.enterprise}-${var.environment}-${var.region}-AKS-WEB"
-  node_resource_group = azurerm_resource_group.aks-nodes-web-rg.name
+  node_resource_group = "${var.enterprise}-${var.environment}-${var.region}-AKS-WEB-NODES-RG"
   
 
   default_node_pool {
@@ -41,7 +41,7 @@ resource "azurerm_kubernetes_cluster" "aks_worker" {
   location            = azurerm_resource_group.aks-rg.location
   resource_group_name = azurerm_resource_group.aks-rg.name
   dns_prefix          = "${var.enterprise}-${var.environment}-${var.region}-AKS-WORKER"
-  node_resource_group = azurerm_resource_group.aks-nodes-worker-rg.name
+  node_resource_group = "${var.enterprise}-${var.environment}-${var.region}-AKS-WORKER-NODES-RG"
   
 
   default_node_pool {
