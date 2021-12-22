@@ -18,8 +18,8 @@ resource "azurerm_kubernetes_cluster" "aks_web" {
   }
 
   service_principal {
-    client_id     = azuread_service_principal.adapp-client-sp.id
-    client_secret = azuread_service_principal_password.app.value
+    client_id     = var.client_id
+    client_secret = var.client_secret
   }
 
   # Une piste pour acroitre la sécurité, et intégrer l'active directory dans les droits de livraisons des applis
@@ -53,8 +53,8 @@ resource "azurerm_kubernetes_cluster" "aks_worker" {
   }
 
   service_principal {
-    client_id     = azuread_service_principal.adapp-client-sp.id
-    client_secret = azuread_service_principal_password.app.value
+    client_id     = var.client_id
+    client_secret = var.client_secret
   }
 
   # Une piste pour acroitre la sécurité, et intégrer l'active directory dans les droits de livraisons des applis
