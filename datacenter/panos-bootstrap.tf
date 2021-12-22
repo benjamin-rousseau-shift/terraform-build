@@ -343,6 +343,12 @@ resource "local_file" "bootstrap" {
                   <interface>ethernet1/5</interface>
                 </source>
               </entry>
+              <entry name="paloalto-networks-services">
+                <source>
+                  <address>${var.IPAddressPrefix}.5.254/24</address>
+                  <interface>ethernet1/5</interface>
+                </source>
+              </entry>
               <entry name="panorama">
                 <source>
                   <address>${var.IPAddressPrefix}.5.254/24</address>
@@ -409,8 +415,8 @@ resource "azurerm_storage_share_file" "bootstrap" {
   name             = "bootstrap.xml"
   storage_share_id = data.azurerm_storage_share.bootstrap-storage-share.id
   source           = "${path.module}/bootstrap.xml"
-  path = "config"
-  depends_on = [local_file.bootstrap]
+  path             = "config"
+  depends_on       = [local_file.bootstrap]
 }
 
 # Generating init-cfg.txt
@@ -420,6 +426,8 @@ type=dhcp-client
 ip-address=
 default-gateway=
 netmask=
+vm-auth-key=${var.panorama_vm_authkey}
+panorama-server=${var.panorama}
 EOT
   filename = "${path.module}/init-cfg.txt"
 }
@@ -429,6 +437,6 @@ resource "azurerm_storage_share_file" "init-cfg" {
   name             = "init-cfg.txt"
   storage_share_id = data.azurerm_storage_share.bootstrap-storage-share.id
   source           = "${path.module}/init-cfg.txt"
-  path = "config"
-  depends_on = [local_file.bootstrap]
+  path             = "config"
+  depends_on       = [local_file.bootstrap]
 }

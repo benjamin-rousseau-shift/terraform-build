@@ -37,7 +37,7 @@ variable "IPAddressPrefix" {
 variable "FirewallVmName" {
   default = "shazfr2pafw1"
 }
-
+variable "panorama" {}
 variable "client_id" {}
 variable "tenant_id" {}
 variable "client_secret" {}
@@ -46,3 +46,4 @@ variable "bootstrap_storage_account" {}
 variable "bootstrap_resource_group" {}
 variable "bootstrap_storage_share" { default = "bootstrap" }
 variable "admin_panos" {}
+variable "panorama_vm_authkey" {}
