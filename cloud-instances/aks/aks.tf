@@ -32,6 +32,7 @@ resource "azurerm_kubernetes_cluster" "aks_web" {
     TYPE = "KUBERNETES"
     LOCATION = "${var.environment}-${var.region}"
     PROJECT  = "AKS"
+    VERSION = "${local.version}"
   }
 }
 
@@ -68,5 +69,6 @@ resource "azurerm_kubernetes_cluster" "aks_worker" {
     TYPE = "KUBERNETES"
     LOCATION = "${var.environment}-${var.region}"
     PROJECT  = "AKS"
+    VERSION = "${local.version}"
   }
 }
