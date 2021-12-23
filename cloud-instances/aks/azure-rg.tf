@@ -7,5 +7,6 @@ resource "azurerm_resource_group" "aks-rg" {
     TYPE     = "RESOURCE-GROUP"
     PROJECT  = "AKS"
     LOCATION = "${var.environment}-${var.region}"
+    VERSION = "${local.version}"
   }
 }

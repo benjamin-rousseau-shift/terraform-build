@@ -6,7 +6,7 @@ resource "azurerm_kubernetes_cluster" "aks_web" {
   resource_group_name = azurerm_resource_group.aks-rg.name
   dns_prefix          = "${var.enterprise}-${var.environment}-${var.region}-AKS-WEB-${var.shift-salt}"
   node_resource_group = "${var.enterprise}-${var.environment}-${var.region}-AKS-WEB-NODES-RG-${var.shift-salt}"
-
+  
 
   network_profile {
     network_plugin = "azure"
@@ -36,6 +36,7 @@ resource "azurerm_kubernetes_cluster" "aks_web" {
     TYPE = "KUBERNETES"
     LOCATION = "${var.environment}-${var.region}"
     PROJECT  = "AKS"
+    VERSION = "${local.version}"
   }
 }
 
@@ -75,5 +76,6 @@ resource "azurerm_kubernetes_cluster" "aks_web" {
 #    TYPE = "KUBERNETES"
 #    LOCATION = "${var.environment}-${var.region}"
 #    PROJECT  = "AKS"
+#    VERSION = "${local.version}"
 #  }
 #}
