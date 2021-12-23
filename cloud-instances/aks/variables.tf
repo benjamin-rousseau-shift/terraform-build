@@ -52,7 +52,7 @@ variable "azurelocation" {
 }
 
 variable "shift-salt" {
-  default = "happy-panda"
+  default = "joyful-ant"
 }
 
 variable "client_id" {}
