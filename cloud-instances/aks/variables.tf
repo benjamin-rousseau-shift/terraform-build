@@ -51,6 +51,10 @@ variable "azurelocation" {
   default = "francecentral"
 }
 
+variable "shift-salt" {
+  default = "happy-panda"
+}
+
 variable "client_id" {}
 variable "tenant_id" {}
 variable "client_secret" {}

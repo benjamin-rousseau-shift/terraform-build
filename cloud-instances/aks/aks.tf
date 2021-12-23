@@ -1,11 +1,11 @@
 
 
 resource "azurerm_kubernetes_cluster" "aks_web" {
-  name                = "${var.enterprise}-${var.environment}-${var.region}-AKS-WEB"
+  name                = "${var.enterprise}-${var.environment}-${var.region}-AKS-WEB-${var.shift-salt}"
   location            = azurerm_resource_group.aks-rg.location
   resource_group_name = azurerm_resource_group.aks-rg.name
-  dns_prefix          = "${var.enterprise}-${var.environment}-${var.region}-AKS-WEB"
-  node_resource_group = "${var.enterprise}-${var.environment}-${var.region}-AKS-WEB-NODES-RG"
+  dns_prefix          = "${var.enterprise}-${var.environment}-${var.region}-AKS-WEB-${var.shift-salt}"
+  node_resource_group = "${var.enterprise}-${var.environment}-${var.region}-AKS-WEB-NODES-RG-${var.shift-salt}"
   
 
   default_node_pool {
@@ -37,11 +37,11 @@ resource "azurerm_kubernetes_cluster" "aks_web" {
 
 
 resource "azurerm_kubernetes_cluster" "aks_worker" {
-  name                = "${var.enterprise}-${var.environment}-${var.region}-AKS-WORKER"
+  name                = "${var.enterprise}-${var.environment}-${var.region}-AKS-WORKER-${var.shift-salt}"
   location            = azurerm_resource_group.aks-rg.location
   resource_group_name = azurerm_resource_group.aks-rg.name
-  dns_prefix          = "${var.enterprise}-${var.environment}-${var.region}-AKS-WORKER"
-  node_resource_group = "${var.enterprise}-${var.environment}-${var.region}-AKS-WORKER-NODES-RG"
+  dns_prefix          = "${var.enterprise}-${var.environment}-${var.region}-AKS-WORKER-${var.shift-salt}"
+  node_resource_group = "${var.enterprise}-${var.environment}-${var.region}-AKS-WORKER-NODES-RG-${var.shift-salt}"
   
 
   default_node_pool {
