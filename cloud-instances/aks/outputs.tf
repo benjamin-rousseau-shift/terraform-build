@@ -1,3 +1,7 @@
+output "version" {
+  value = local.version
+}
+
 output "kubernetes_cluster_web_name" {
   value = azurerm_kubernetes_cluster.aks_web.name
 }
