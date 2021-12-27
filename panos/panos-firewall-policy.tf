@@ -62,8 +62,8 @@ resource "panos_security_policy_group" "default" {
     source_users          = ["any"]
     hip_profiles          = ["any"]
     destination_zones     = [panos_zone.untrust.name]
-    destination_addresses = [var.domain_controller]
-    applications          = ["dns"]
+    destination_addresses = ["any"]
+    applications          = ["ssl"]
     services              = ["application-default"]
     categories            = ["category_aks"]
     action                = "allow"
