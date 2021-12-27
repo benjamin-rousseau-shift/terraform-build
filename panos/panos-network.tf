@@ -128,7 +128,7 @@ resource "panos_static_route_ipv4" "aks_web" {
   destination    = "${var.AKSIPAddressPrefix}.0.0/18"
   interface      = panos_ethernet_interface.eth2.name
   type           = "ip-address"
-  next_hop       = panos_ethernet_interface.eth2.static_ips[0]
+  next_hop       = "${var.IPAddressPrefix}.2.1"
 }
 
 # Tunnel Interface
