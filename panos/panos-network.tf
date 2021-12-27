@@ -7,43 +7,43 @@ resource "panos_ethernet_interface" "eth1" {
   comment    = "UNTRUST Interface"
 }
 resource "panos_ethernet_interface" "eth2" {
-  name       = "ethernet1/2"
-  vsys       = "vsys1"
-  mode       = "layer3"
-  static_ips = ["${var.IPAddressPrefix}.2.254/24"]
-  comment    = "WEB Interface"
+  name               = "ethernet1/2"
+  vsys               = "vsys1"
+  mode               = "layer3"
+  static_ips         = ["${var.IPAddressPrefix}.2.254/24"]
+  comment            = "WEB Interface"
   management_profile = panos_management_profile.ping.name
 }
 resource "panos_ethernet_interface" "eth3" {
-  name       = "ethernet1/3"
-  vsys       = "vsys1"
-  mode       = "layer3"
-  static_ips = ["${var.IPAddressPrefix}.3.254/24"]
-  comment    = "STORAGE Interface"
+  name               = "ethernet1/3"
+  vsys               = "vsys1"
+  mode               = "layer3"
+  static_ips         = ["${var.IPAddressPrefix}.3.254/24"]
+  comment            = "STORAGE Interface"
   management_profile = panos_management_profile.ping.name
 }
 resource "panos_ethernet_interface" "eth4" {
-  name       = "ethernet1/4"
-  vsys       = "vsys1"
-  mode       = "layer3"
-  static_ips = ["${var.IPAddressPrefix}.4.254/24"]
-  comment    = "DBCP Interface"
+  name               = "ethernet1/4"
+  vsys               = "vsys1"
+  mode               = "layer3"
+  static_ips         = ["${var.IPAddressPrefix}.4.254/24"]
+  comment            = "DBCP Interface"
   management_profile = panos_management_profile.ping.name
 }
 resource "panos_ethernet_interface" "eth5" {
-  name       = "ethernet1/5"
-  vsys       = "vsys1"
-  mode       = "layer3"
-  static_ips = ["${var.IPAddressPrefix}.5.254/24"]
-  comment    = "INTERNAL-SRV Interface"
+  name               = "ethernet1/5"
+  vsys               = "vsys1"
+  mode               = "layer3"
+  static_ips         = ["${var.IPAddressPrefix}.5.254/24"]
+  comment            = "INTERNAL-SRV Interface"
   management_profile = panos_management_profile.default.name
 }
 resource "panos_ethernet_interface" "eth6" {
-  name       = "ethernet1/6"
-  vsys       = "vsys1"
-  mode       = "layer3"
-  static_ips = ["${var.IPAddressPrefix}.7.254/24"]
-  comment    = "MGT Interface"
+  name               = "ethernet1/6"
+  vsys               = "vsys1"
+  mode               = "layer3"
+  static_ips         = ["${var.IPAddressPrefix}.7.254/24"]
+  comment            = "MGT Interface"
   management_profile = panos_management_profile.ping.name
 }
 
@@ -119,6 +119,16 @@ resource "panos_static_route_ipv4" "ov_pa" {
   destination    = "10.2.0.0/16"
   interface      = panos_tunnel_interface.ov_pa.name
   type           = ""
+}
+
+
+resource "panos_static_route_ipv4" "aks_web" {
+  name           = "ROUTE-TO-AKS-WEB"
+  virtual_router = panos_virtual_router.default.name
+  destination    = "${var.AKSIPAddressPrefix}.0.0/18"
+  interface      = panos_ethernet_interface.eth2.name
+  type           = "ip-address"
+  next_hop       = panos_ethernet_interface.eth2.static_ips[0]
 }
 
 # Tunnel Interface

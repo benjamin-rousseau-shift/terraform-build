@@ -36,4 +36,3 @@ variable "tenant_id" {}
 variable "client_secret" {}
 variable "subscription_id" {}
 variable "admin_password" {}
-
