@@ -5,6 +5,12 @@ resource "panos_address_object" "local_range" {
   description = ""
 }
 
+resource "panos_address_object" "local_range_aks" {
+  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-IP-RANGE_${var.AKSIPAddressPrefix}.0.0"
+  value       = "${var.AKSIPAddressPrefix}.0.0/16"
+  description = ""
+}
+
 resource "panos_address_object" "local_mgmt" {
   name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-${var.pafw}1_${var.IPAddressPrefix}.5.254"
   value       = "${var.IPAddressPrefix}.5.254"
