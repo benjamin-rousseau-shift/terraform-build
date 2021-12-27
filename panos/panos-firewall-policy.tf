@@ -44,7 +44,7 @@ resource "panos_security_policy_group" "default" {
   rule {
     name                  = "PERMIT DNS TO DOMAIN CONTROLLER LOCAL"
     source_zones          = [panos_zone.internal.name]
-    source_addresses      = [panos_address_object.local_mgmt.name]
+    source_addresses      = [panos_address_object.local_mgmt.name,"${var.AKSIPAddressPrefix}.0.0/18"]
     source_users          = ["any"]
     hip_profiles          = ["any"]
     destination_zones     = [panos_zone.vpn_s2s.name]
