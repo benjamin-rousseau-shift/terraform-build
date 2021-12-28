@@ -32,7 +32,7 @@ data azurerm_public_ip "panos_pub_untrust" {
 }
 
 data azurerm_network_interface "panos_pub_nginx" {
-  name                = "${lower(var.enterprise)}-${lower(var.environment)}-${lower(var.region)}-${lower(var.pafw)}1-eth1"
+  name                = "${lower(var.enterprise)}${lower(var.environment)}${lower(var.region)}${lower(var.pafw)}1-eth1"
   resource_group_name = "${var.enterprise}-${var.environment}-${var.region}-${var.pafw}-RG"
 }
 
