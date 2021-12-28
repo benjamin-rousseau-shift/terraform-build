@@ -35,16 +35,11 @@ resource "panos_nat_rule_group" "default" {
     }
     translated_packet {
       source {
-        dynamic_ip_and_port {
-          translated_address {
-            translated_addresses = [panos_address_object.local_nginx.name]
-          }
-        }
       }
       destination {
         static_translation {
-          address = "20.40.141.174"
-          port = "443"
+          address = "10.100.81.1"
+          port = "80"
         }
       }
     }
@@ -70,7 +65,7 @@ resource "panos_security_policy_group" "default" {
   rule {
     name                  = "PERMIT DNS TO DOMAIN CONTROLLER LOCAL"
     source_zones          = [panos_zone.internal.name,panos_zone.web.name]
-    source_addresses      = [panos_address_object.local_mgmt.name,"${var.AKSIPAddressPrefix}.0.0/18"]
+    source_addresses      = [panos_address_object.local_mgmt.name,panos_address_object.local_range_aks.name]
     source_users          = ["any"]
     hip_profiles          = ["any"]
     destination_zones     = [panos_zone.vpn_s2s.name]
@@ -117,7 +112,21 @@ resource "panos_security_policy_group" "default" {
     hip_profiles          = ["any"]
     destination_zones     = [panos_zone.web.name]
     destination_addresses = [data.azurerm_network_interface.panos_pub_nginx.private_ip_addresses[1]]
-    applications          = ["ssl"]
+    applications          = ["web-browsing"]
+    services              = ["application-default"]
+    categories            = ["any"]
+    action                = "allow"
+  }
+
+  rule {
+    name                  = "PERMIT USER ACCESS TO AKS"
+    source_zones          = [panos_zone.vpn_s2s.name]
+    source_addresses      = ["any"]
+    source_users          = ["any"]
+    hip_profiles          = ["any"]
+    destination_zones     = [panos_zone.web.name]
+    destination_addresses = [panos_address_object.local_range_aks.name]
+    applications          = ["any"]
     services              = ["application-default"]
     categories            = ["any"]
     action                = "allow"

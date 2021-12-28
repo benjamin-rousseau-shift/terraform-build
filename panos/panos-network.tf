@@ -123,9 +123,9 @@ resource "panos_static_route_ipv4" "ov_pa" {
 
 
 resource "panos_static_route_ipv4" "aks_web" {
-  name           = "ROUTE-TO-AKS-WEB"
+  name           = "ROUTE-TO-AKS"
   virtual_router = panos_virtual_router.default.name
-  destination    = "${var.AKSIPAddressPrefix}.0.0/18"
+  destination    = panos_address_object.local_range_aks.value
   interface      = panos_ethernet_interface.eth2.name
   type           = "ip-address"
   next_hop       = "${var.IPAddressPrefix}.2.1"
