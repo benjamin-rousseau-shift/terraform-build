@@ -31,7 +31,7 @@ resource "panos_nat_rule_group" "default" {
       destination_zone      = panos_zone.untrust.name
       destination_interface = panos_ethernet_interface.eth1.name
       source_addresses = ["any"]
-      destination_addresses = [data.azurerm_network_interface.panos_pub_nginx.private_ip_address]
+      destination_addresses = [data.azurerm_network_interface.panos_pub_nginx.private_ip_addresses[1]]
     }
     translated_packet {
       source {
