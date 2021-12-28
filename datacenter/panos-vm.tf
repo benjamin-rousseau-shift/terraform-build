@@ -27,6 +27,14 @@ resource "azurerm_network_interface" "myterraformniceth1" {
     public_ip_address_id          = azurerm_public_ip.myterraformpublicipuntrust.id
   }
 
+  ip_configuration {
+    name                          = "nginx"
+    subnet_id                     = azurerm_subnet.myterraformsubnetuntrust.id
+    private_ip_address_allocation = "Static"
+    private_ip_address            = "${var.IPAddressPrefix}.1.4"
+    public_ip_address_id          = azurerm_public_ip.myterraformpublicipnginx.id
+  }
+
 }
 
 resource "azurerm_network_interface" "myterraformniceth2" {

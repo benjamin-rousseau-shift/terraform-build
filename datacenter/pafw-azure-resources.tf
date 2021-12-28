@@ -60,3 +60,11 @@ resource "azurerm_public_ip" "myterraformpublicipuntrust" {
   allocation_method   = "Static"
 
 }
+
+resource "azurerm_public_ip" "myterraformpublicipnginx" {
+  name                = "${lower(var.enterprise)}-${lower(var.environment)}-${lower(var.region)}-${lower(var.project)}1-pub-ip-nginx"
+  location            = var.azurelocation
+  resource_group_name = azurerm_resource_group.myterraformgroup.name
+  allocation_method   = "Static"
+
+}
