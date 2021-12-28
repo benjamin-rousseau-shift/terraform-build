@@ -23,6 +23,34 @@ resource "panos_nat_rule_group" "default" {
       destination {}
     }
   }
+
+  rule {
+    name = "NAT TO NGINX"
+    original_packet {
+      source_zones          = [
+        panos_zone.untrust
+      ]
+      destination_zone      = panos_zone.untrust.name
+      destination_interface = panos_ethernet_interface.eth1.name
+      source_addresses = ["any"]
+      destination_addresses = [data.azurerm_network_interface.panos_pub_nginx.private_ip_address]
+    }
+    translated_packet {
+      source {
+        dynamic_ip_and_port {
+          translated_address {
+            translated_addresses = [panos_address_object.local_nginx.name]
+          }
+        }
+      }
+      destination {
+        static_translation {
+          address = "20.40.141.174"
+          port = "443"
+        }
+      }
+    }
+  }
 }
 
 # SEC Rules
@@ -63,9 +91,9 @@ resource "panos_security_policy_group" "default" {
     hip_profiles          = ["any"]
     destination_zones     = [panos_zone.untrust.name]
     destination_addresses = ["any"]
-    applications          = ["ssl"]
-    services              = ["application-default"]
-    categories            = ["category_aks"]
+    applications          = ["any"]
+    services              = ["service-https","TCP_9000"]
+    categories            = ["any"]
     action                = "allow"
   }
 
@@ -78,6 +106,20 @@ resource "panos_security_policy_group" "default" {
     destination_zones     = [panos_zone.untrust.name]
     destination_addresses = [var.ov_pa_pub, "${var.IPAddressPrefix}.1.254"]
     applications          = ["ipsec"]
+    services              = ["application-default"]
+    categories            = ["any"]
+    action                = "allow"
+  }
+
+  rule {
+    name                  = "PERMIT INTERNET TO NGINX"
+    source_zones          = [panos_zone.untrust.name]
+    source_addresses      = ["any"]
+    source_users          = ["any"]
+    hip_profiles          = ["any"]
+    destination_zones     = [panos_zone.web.name]
+    destination_addresses = [data.azurerm_network_interface.panos_pub_nginx.private_ip_address]
+    applications          = ["ssl"]
     services              = ["application-default"]
     categories            = ["any"]
     action                = "allow"

@@ -16,3 +16,9 @@ resource "panos_address_object" "local_mgmt" {
   value       = "${var.IPAddressPrefix}.5.254"
   description = ""
 }
+
+resource "panos_address_object" "local_nginx" {
+  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-${var.pafw}1_${data.azurerm_network_interface.panos_pub_nginx.private_ip_address}"
+  value       = data.azurerm_network_interface.panos_pub_nginx.private_ip_address
+  description = ""
+}
