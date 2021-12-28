@@ -116,7 +116,7 @@ resource "panos_security_policy_group" "default" {
     source_users          = ["any"]
     hip_profiles          = ["any"]
     destination_zones     = [panos_zone.web.name]
-    destination_addresses = [data.azurerm_network_interface.panos_pub_nginx.private_ip_address]
+    destination_addresses = [data.azurerm_network_interface.panos_pub_nginx.private_ip_addresses[1]]
     applications          = ["ssl"]
     services              = ["application-default"]
     categories            = ["any"]
