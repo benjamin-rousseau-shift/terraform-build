@@ -90,7 +90,7 @@ resource "panos_security_policy_group" "default" {
     destination_zones     = [panos_zone.untrust.name]
     destination_addresses = ["any"]
     applications          = ["any"]
-    services              = ["service-https","TCP_9000"]
+    services              = ["service-https","tcp_9000"]
     categories            = ["any"]
     action                = "allow"
   }
