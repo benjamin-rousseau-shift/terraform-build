@@ -27,9 +27,7 @@ resource "panos_nat_rule_group" "default" {
   rule {
     name = "NAT TO NGINX"
     original_packet {
-      source_zones          = [
-        panos_zone.untrust
-      ]
+      source_zones          = [panos_zone.untrust]
       destination_zone      = panos_zone.untrust.name
       destination_interface = panos_ethernet_interface.eth1.name
       source_addresses = ["any"]
