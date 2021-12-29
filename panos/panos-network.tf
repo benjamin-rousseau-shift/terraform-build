@@ -127,6 +127,7 @@ resource "panos_static_route_ipv4" "zi_cfr" {
   destination    = panos_address_object.zi_cfr_range.value
   interface      = panos_tunnel_interface.zi_cfr.name
   type           = ""
+  depends_on = [panos_tunnel_interface.zi_cfr]
 }
 
 
