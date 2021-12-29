@@ -1,7 +1,7 @@
 #Tags
 resource "panos_administrative_tag" "tag_vpn_clients" {
   name = "VPN-CLIENT"
-  vsys = "vsys2"
+  vsys = "vsys1"
   color = "color5"
   comment = ""
 }
