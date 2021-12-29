@@ -150,7 +150,7 @@ resource "panos_security_policy_group" "default" {
   }
 
   rule {
-    tags = [panos_administrative_tag.internet.name,panos_administrative_tag.aks_web]
+    tags = [panos_administrative_tag.internet.name,panos_administrative_tag.aks_web.name]
     name                  = "PERMIT INTERNET TO NGINX POC"
     source_zones          = [panos_zone.untrust.name]
     source_addresses      = ["any"]
@@ -165,7 +165,7 @@ resource "panos_security_policy_group" "default" {
   }
 
   rule {
-    tags = [panos_administrative_tag.vpn-s2s.name,panos_administrative_tag.aks_web]
+    tags = [panos_administrative_tag.vpn-s2s.name,panos_administrative_tag.aks_web.name]
     name                  = "PERMIT VPN-CLIENT USER ACCESS TO NGINX"
     source_zones          = [panos_zone.vpn_s2s.name]
     source_addresses      = [panos_address_group.local_vpn_client.name]
