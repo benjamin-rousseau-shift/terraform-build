@@ -9,14 +9,14 @@ resource "panos_administrative_tag" "tag_vpn_clients" {
 resource "panos_administrative_tag" "internet" {
   name = "INTERNET"
   vsys = "vsys1"
-  color = "color7"
+  color = "color6"
   comment = ""
 }
 
 resource "panos_administrative_tag" "vpn-s2s" {
   name = "VPN-S2S"
   vsys = "vsys1"
-  color = "color17"
+  color = "color31"
   comment = ""
 }
 
@@ -30,7 +30,7 @@ resource "panos_administrative_tag" "aks_web" {
 resource "panos_administrative_tag" "panorama" {
   name = "PANORAMA"
   vsys = "vsys1"
-  color = "color37"
+  color = "color15"
   comment = ""
 }
 
