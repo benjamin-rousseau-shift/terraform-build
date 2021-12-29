@@ -121,6 +121,14 @@ resource "panos_static_route_ipv4" "ov_pa" {
   type           = ""
 }
 
+resource "panos_static_route_ipv4" "ov_pa" {
+  name           = "ROUTE-TO-ZI-CFR"
+  virtual_router = panos_virtual_router.default.name
+  destination    = panos_address_object.zi_cfr_range.value
+  interface      = panos_tunnel_interface.zi_cfr.name
+  type           = ""
+}
+
 
 resource "panos_static_route_ipv4" "aks_web" {
   name           = "ROUTE-TO-AKS-WEB"
@@ -136,6 +144,12 @@ resource "panos_tunnel_interface" "ov_pa" {
   name    = "tunnel.1"
   comment = "TUNNEL OV-PA"
 }
+
+resource "panos_tunnel_interface" "zi_cfr" {
+  name    = "tunnel.2"
+  comment = "TUNNEL ZI-CFR"
+}
+
 
 # Zones
 resource "panos_zone" "dbcp" {

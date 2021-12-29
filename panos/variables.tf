@@ -33,6 +33,7 @@ variable "FirewallVmName" {
 }
 variable "admin_panos" {}
 variable "ov_pa_psk" {}
+variable "zi_cfr_psk" {}
 variable "client_id" {}
 variable "tenant_id" {}
 variable "client_secret" {}

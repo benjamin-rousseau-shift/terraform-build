@@ -41,6 +41,13 @@ resource "panos_administrative_tag" "vault" {
   comment = ""
 }
 
+resource "panos_administrative_tag" "tunnel_pub_ips" {
+  name = "TUNNEL"
+  vsys = "vsys1"
+  color = "color21"
+  comment = ""
+}
+
 # Address Objects
 resource "panos_address_object" "vault" {
   name        = "LOCAL_${var.enterprise}-ZI-HASH-VA1_10.57.31.12"
@@ -52,13 +59,21 @@ resource "panos_address_object" "vault" {
 resource "panos_address_object" "ov_pa_pub" {
   name        = "LOCAL_${var.enterprise}-OV-PA-PUB-IP_54.36.29.130"
   value       = "54.36.29.130"
-  description = "It's the Pub IP of OV_PA used for VPN-S2S"
+  description = "It's the Pub IP of OV-PA used for VPN-S2S"
+  tags = [panos_administrative_tag.tunnel_pub_ips.name]
+}
+
+resource "panos_address_object" "zi_cfr_pub" {
+  name        = "LOCAL_${var.enterprise}-ZI-CFR-PUB-IP_20.188.33.147"
+  value       = "20.188.33.147"
+  description = "It's the Pub IP of ZI-CFR used for VPN-S2S"
+  tags = [panos_administrative_tag.tunnel_pub_ips.name]
 }
 
 resource "panos_address_object" "domain_controller" {
   name        = "LOCAL_DANDORAN_10.2.3.1"
   value       = "10.2.3.1"
-  description = "It's a Domain Controller located in OV_PA"
+  description = "It's a Domain Controller located in OV-PA"
 }
 
 resource "panos_address_object" "panorama" {
@@ -82,6 +97,12 @@ resource "panos_address_object" "local_pub_ip" {
 resource "panos_address_object" "ov_pa_range" {
   name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-IP-RANGE_10.2.0.0-16"
   value       = "10.2.0.0/16"
+  description = ""
+}
+
+resource "panos_address_object" "zi_cfr_range" {
+  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-IP-RANGE_10.57.0.0-16"
+  value       = "10.57.0.0/16"
   description = ""
 }
 
@@ -154,4 +175,10 @@ resource "panos_address_group" "local_vault" {
   name = "LOCAL_GRP-HASH-VA"
   dynamic_match = "'VAULT'"
   description = "All Hashicorp Vault Group"
+}
+
+resource "panos_address_group" "tunnel" {
+  name = "LOCAL_GRP-ALL-TUNNEL-PUB-IP"
+  dynamic_match = "'TUNNEL'"
+  description = "All Public IP of Different datacenter for tunnel vpn-s2s"
 }

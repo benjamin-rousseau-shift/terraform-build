@@ -153,11 +153,11 @@ resource "panos_security_policy_group" "default" {
     tags = [panos_administrative_tag.vpn-s2s.name]
     name                  = "PERMIT VPN-S2S LOCAL"
     source_zones          = [panos_zone.untrust.name]
-    source_addresses      = [panos_address_object.ov_pa_pub.name, panos_address_object.local_pub_ip.name]
+    source_addresses      = [panos_address_group.tunnel.name, panos_address_object.local_pub_ip.name]
     source_users          = ["any"]
     hip_profiles          = ["any"]
     destination_zones     = [panos_zone.untrust.name]
-    destination_addresses = [panos_address_object.ov_pa_pub.name, panos_address_object.local_pub_ip.name]
+    destination_addresses = [panos_address_group.tunnel.name, panos_address_object.local_pub_ip.name]
     applications          = ["ipsec"]
     services              = ["application-default"]
     categories            = ["any"]
