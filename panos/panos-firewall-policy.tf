@@ -74,11 +74,11 @@ resource "panos_security_policy_group" "default" {
   rule {
     name                  = "PERMIT ACCESS TO PANORAMA LOCAL"
     source_zones          = [panos_zone.internal.name, panos_zone.vpn_s2s.name]
-    source_addresses      = [panos_address_object.panorama.value, panos_address_object.local_mgmt.name]
+    source_addresses      = [panos_address_object.panorama.name, panos_address_object.local_mgmt.name]
     source_users          = ["any"]
     hip_profiles          = ["any"]
     destination_zones     = [panos_zone.internal.name, panos_zone.vpn_s2s.name]
-    destination_addresses = [panos_address_object.panorama.value, panos_address_object.local_mgmt.name]
+    destination_addresses = [panos_address_object.panorama.name, panos_address_object.local_mgmt.name]
     applications          = ["paloalto-updates", "paloalto-userid-agent", "panorama", "ssl"]
     services              = ["any"]
     categories            = ["any"]
@@ -116,11 +116,11 @@ resource "panos_security_policy_group" "default" {
   rule {
     name                  = "PERMIT VPN-S2S LOCAL"
     source_zones          = [panos_zone.untrust.name]
-    source_addresses      = [panos_address_object.ov_pa_pub.value, "${var.IPAddressPrefix}.1.254"]
+    source_addresses      = [panos_address_object.ov_pa_pub.name, panos_address_object.local_pub_ip.name]
     source_users          = ["any"]
     hip_profiles          = ["any"]
     destination_zones     = [panos_zone.untrust.name]
-    destination_addresses = [panos_address_object.ov_pa_pub.value, "${var.IPAddressPrefix}.1.254"]
+    destination_addresses = [panos_address_object.ov_pa_pub.name, panos_address_object.local_pub_ip.name]
     applications          = ["ipsec"]
     services              = ["application-default"]
     categories            = ["any"]
@@ -134,7 +134,7 @@ resource "panos_security_policy_group" "default" {
     source_users          = ["any"]
     hip_profiles          = ["any"]
     destination_zones     = [panos_zone.web.name]
-    destination_addresses = [data.azurerm_network_interface.panos_pub_nginx.private_ip_addresses[1]]
+    destination_addresses = [panos_address_object.local_nginx_poc_pub.name]
     applications          = ["web-browsing"]
     services              = ["application-default"]
     categories            = ["any"]

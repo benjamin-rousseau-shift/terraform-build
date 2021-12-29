@@ -31,6 +31,12 @@ resource "panos_address_object" "local_range" {
   description = ""
 }
 
+resource "panos_address_object" "local_pub_ip" {
+  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-${var.pafw}1-PUB-IP_${var.IPAddressPrefix}.1.254"
+  value       = "${var.IPAddressPrefix}.1.254"
+  description = ""
+}
+
 resource "panos_address_object" "ov_pa_range" {
   name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-IP-RANGE_10.2.0.0"
   value       = "10.2.0.0/16"
@@ -68,6 +74,12 @@ resource "panos_address_object" "az_wjp_vpn_range" {
 resource "panos_address_object" "local_range_aks_web" {
   name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-AKS-WEB-IP-RANGE_${var.AKSIPAddressPrefix}.0.0"
   value       = "${var.AKSIPAddressPrefix}.0.0/18"
+  description = ""
+}
+
+resource "panos_address_object" "local_nginx_poc_pub" {
+  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-AKS-WEB-POC-PUB-IP_${data.azurerm_network_interface.panos_pub_nginx.private_ip_addresses[1]}"
+  value       = "${data.azurerm_network_interface.panos_pub_nginx.private_ip_addresses[1]}"
   description = ""
 }
 
