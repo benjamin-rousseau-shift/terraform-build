@@ -92,7 +92,7 @@ resource "panos_management_profile" "default" {
   snmp           = true
   userid_service = true
   permitted_ips  = [
-    var.panorama, "10.2.4.0/24", "10.28.6.0/24", "10.2.3.105/32", "10.2.3.180/32", "10.57.26.5/32", "10.57.26.6/32",
+    panos_address_object.panorama.value, "10.2.4.0/24", "10.28.6.0/24", "10.2.3.105/32", "10.2.3.180/32", "10.57.26.5/32", "10.57.26.6/32",
     "10.2.184.5/32", "10.57.5.30/32"
   ]
 }
@@ -123,7 +123,7 @@ resource "panos_static_route_ipv4" "ov_pa" {
 
 
 resource "panos_static_route_ipv4" "aks_web" {
-  name           = "ROUTE-TO-AKS"
+  name           = "ROUTE-TO-AKS-WEB"
   virtual_router = panos_virtual_router.default.name
   destination    = panos_address_object.local_range_aks_web.value
   interface      = panos_ethernet_interface.eth2.name

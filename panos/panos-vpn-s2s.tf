@@ -4,7 +4,7 @@
 resource "panos_ike_gateway" "ov_pa_ike" {
   name                   = "P1-VPN-${var.environment}-${var.region}-TO-OV-PA"
   peer_ip_type           = "ip"
-  peer_ip_value          = var.ov_pa_pub
+  peer_ip_value          = panos_address_object.ov_pa_pub.value
   version                = "ikev2"
   interface              = panos_ethernet_interface.eth1.name
   local_ip_address_type  = "ip"
@@ -13,7 +13,7 @@ resource "panos_ike_gateway" "ov_pa_ike" {
   local_id_type          = "ipaddr"
   local_id_value         = data.azurerm_public_ip.panos_pub_untrust.ip_address
   peer_id_type           = "ipaddr"
-  peer_id_value          = var.ov_pa_pub
+  peer_id_value          = panos_address_object.ov_pa_pub.value
   ikev2_crypto_profile   = panos_ike_crypto_profile.default.name
   enable_nat_traversal   = true
   nat_traversal_keep_alive = 10

@@ -25,21 +25,44 @@ resource "panos_nat_rule_group" "default" {
   }
 
   rule {
-    name = "NAT TO NGINX"
+    name = "NAT TO NGINX HTTP"
     original_packet {
       source_zones          = [panos_zone.untrust.name]
       destination_zone      = panos_zone.untrust.name
       destination_interface = panos_ethernet_interface.eth1.name
       source_addresses = ["any"]
       destination_addresses = [data.azurerm_network_interface.panos_pub_nginx.private_ip_addresses[1]]
+      service = "service-http"
     }
     translated_packet {
       source {
       }
       destination {
         static_translation {
-          address = "10.100.81.1"
+          address = panos_address_object.local_aks_web_nginx.value
           port = "80"
+        }
+      }
+    }
+  }
+
+  rule {
+    name = "NAT TO NGINX HTTPS"
+    original_packet {
+      source_zones          = [panos_zone.untrust.name]
+      destination_zone      = panos_zone.untrust.name
+      destination_interface = panos_ethernet_interface.eth1.name
+      source_addresses = ["any"]
+      destination_addresses = [data.azurerm_network_interface.panos_pub_nginx.private_ip_addresses[1]]
+      service = "service-https"
+    }
+    translated_packet {
+      source {
+      }
+      destination {
+        static_translation {
+          address = panos_address_object.local_aks_web_nginx.value
+          port = "443"
         }
       }
     }
@@ -51,11 +74,11 @@ resource "panos_security_policy_group" "default" {
   rule {
     name                  = "PERMIT ACCESS TO PANORAMA LOCAL"
     source_zones          = [panos_zone.internal.name, panos_zone.vpn_s2s.name]
-    source_addresses      = [var.panorama, panos_address_object.local_mgmt.name]
+    source_addresses      = [panos_address_object.panorama.value, panos_address_object.local_mgmt.name]
     source_users          = ["any"]
     hip_profiles          = ["any"]
     destination_zones     = [panos_zone.internal.name, panos_zone.vpn_s2s.name]
-    destination_addresses = [var.panorama, panos_address_object.local_mgmt.name]
+    destination_addresses = [panos_address_object.panorama.value, panos_address_object.local_mgmt.name]
     applications          = ["paloalto-updates", "paloalto-userid-agent", "panorama", "ssl"]
     services              = ["any"]
     categories            = ["any"]
@@ -69,7 +92,7 @@ resource "panos_security_policy_group" "default" {
     source_users          = ["any"]
     hip_profiles          = ["any"]
     destination_zones     = [panos_zone.vpn_s2s.name]
-    destination_addresses = [var.domain_controller]
+    destination_addresses = [panos_address_object.domain_controller.name]
     applications          = ["dns"]
     services              = ["application-default"]
     categories            = ["any"]
@@ -93,11 +116,11 @@ resource "panos_security_policy_group" "default" {
   rule {
     name                  = "PERMIT VPN-S2S LOCAL"
     source_zones          = [panos_zone.untrust.name]
-    source_addresses      = [var.ov_pa_pub, "${var.IPAddressPrefix}.1.254"]
+    source_addresses      = [panos_address_object.ov_pa_pub.value, "${var.IPAddressPrefix}.1.254"]
     source_users          = ["any"]
     hip_profiles          = ["any"]
     destination_zones     = [panos_zone.untrust.name]
-    destination_addresses = [var.ov_pa_pub, "${var.IPAddressPrefix}.1.254"]
+    destination_addresses = [panos_address_object.ov_pa_pub.value, "${var.IPAddressPrefix}.1.254"]
     applications          = ["ipsec"]
     services              = ["application-default"]
     categories            = ["any"]
@@ -105,7 +128,7 @@ resource "panos_security_policy_group" "default" {
   }
 
   rule {
-    name                  = "PERMIT INTERNET TO NGINX"
+    name                  = "PERMIT INTERNET TO NGINX POC"
     source_zones          = [panos_zone.untrust.name]
     source_addresses      = ["any"]
     source_users          = ["any"]
@@ -119,14 +142,14 @@ resource "panos_security_policy_group" "default" {
   }
 
   rule {
-    name                  = "PERMIT USER ACCESS TO AKS"
+    name                  = "PERMIT VPN-CLIENT USER ACCESS TO NGINX"
     source_zones          = [panos_zone.vpn_s2s.name]
-    source_addresses      = ["any"]
+    source_addresses      = [panos_address_group.local_vpn_client.name]
     source_users          = ["any"]
     hip_profiles          = ["any"]
     destination_zones     = [panos_zone.web.name]
     destination_addresses = [panos_address_object.local_range_aks_web.name]
-    applications          = ["any"]
+    applications          = ["web-browsing","ssl"]
     services              = ["application-default"]
     categories            = ["any"]
     action                = "allow"

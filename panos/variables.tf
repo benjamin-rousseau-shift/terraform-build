@@ -32,10 +32,7 @@ variable "FirewallVmName" {
   default = "shazfr2pafw1"
 }
 variable "admin_panos" {}
-variable "ov_pa_pub" {}
 variable "ov_pa_psk" {}
-variable "panorama" {}
-variable "domain_controller" {}
 variable "client_id" {}
 variable "tenant_id" {}
 variable "client_secret" {}

@@ -18,6 +18,7 @@ resource "azurerm_network_interface" "myterraformniceth1" {
   name                = "${var.FirewallVmName}-eth1"
   location            = var.azurelocation
   resource_group_name = azurerm_resource_group.myterraformgroup.name
+  enable_ip_forwarding = true
 
   ip_configuration {
     name                          = "primary"
@@ -41,6 +42,7 @@ resource "azurerm_network_interface" "myterraformniceth2" {
   name                = "${var.FirewallVmName}-eth2"
   location            = var.azurelocation
   resource_group_name = azurerm_resource_group.myterraformgroup.name
+  enable_ip_forwarding = true
 
   ip_configuration {
     name                          = "primary"
@@ -55,6 +57,7 @@ resource "azurerm_network_interface" "myterraformniceth3" {
   name                = "${var.FirewallVmName}-eth3"
   location            = var.azurelocation
   resource_group_name = azurerm_resource_group.myterraformgroup.name
+  enable_ip_forwarding = true
 
   ip_configuration {
     name                          = "primary"
@@ -68,6 +71,7 @@ resource "azurerm_network_interface" "myterraformniceth4" {
   name                = "${var.FirewallVmName}-eth4"
   location            = var.azurelocation
   resource_group_name = azurerm_resource_group.myterraformgroup.name
+  enable_ip_forwarding = true
 
   ip_configuration {
     name                          = "primary"
@@ -82,6 +86,7 @@ resource "azurerm_network_interface" "myterraformniceth5" {
   name                = "${var.FirewallVmName}-eth5"
   location            = var.azurelocation
   resource_group_name = azurerm_resource_group.myterraformgroup.name
+  enable_ip_forwarding = true
 
   ip_configuration {
     name                          = "primary"
@@ -96,6 +101,7 @@ resource "azurerm_network_interface" "myterraformniceth6" {
   name                = "${var.FirewallVmName}-eth6"
   location            = var.azurelocation
   resource_group_name = azurerm_resource_group.myterraformgroup.name
+  enable_ip_forwarding = true
 
   ip_configuration {
     name                          = "primary"
