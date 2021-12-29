@@ -116,7 +116,7 @@ resource "panos_static_route_ipv4" "default" {
 resource "panos_static_route_ipv4" "ov_pa" {
   name           = "ROUTE-TO-OV-PA"
   virtual_router = panos_virtual_router.default.name
-  destination    = "10.2.0.0/16"
+  destination    = panos_address_object.ov_pa_range.value
   interface      = panos_tunnel_interface.ov_pa.name
   type           = ""
 }

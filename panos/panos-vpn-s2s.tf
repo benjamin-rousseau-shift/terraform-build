@@ -6,7 +6,7 @@ resource "panos_ike_gateway" "ov_pa_ike" {
   peer_ip_type           = "ip"
   peer_ip_value          = var.ov_pa_pub
   version                = "ikev2"
-  interface              = "ethernet1/1"
+  interface              = panos_ethernet_interface.eth1.name
   local_ip_address_type  = "ip"
   local_ip_address_value = panos_ethernet_interface.eth1.static_ips[0]
   pre_shared_key         = var.ov_pa_psk
@@ -32,8 +32,8 @@ resource "panos_ipsec_tunnel" "ov_pa_ipsec" {
 resource "panos_ipsec_tunnel_proxy_id_ipv4" "ov_pa_proxy_id" {
   ipsec_tunnel = panos_ipsec_tunnel.ov_pa_ipsec.name
   name = "PROXY-ID-OV-PA"
-  local = "${var.IPAddressPrefix}.0.0/16"
-  remote = "10.2.0.0/16"
+  local = panos_address_object.local_range.value
+  remote = panos_address_object.ov_pa_range.value
   protocol_any = true
 }
 
@@ -42,6 +42,6 @@ resource "panos_ipsec_tunnel_proxy_id_ipv4" "ov_pa_proxy_id_aks_web" {
   ipsec_tunnel = panos_ipsec_tunnel.ov_pa_ipsec.name
   name = "PROXY-ID-OV-PA-AKS-WEB"
   local = panos_address_object.local_range_aks_web.value
-  remote = "10.2.0.0/16"
+  remote = panos_address_object.ov_pa_range.value
   protocol_any = true
 }
