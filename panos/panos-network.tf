@@ -121,7 +121,7 @@ resource "panos_static_route_ipv4" "ov_pa" {
   type           = ""
 }
 
-resource "panos_static_route_ipv4" "ov_pa" {
+resource "panos_static_route_ipv4" "zi_cfr" {
   name           = "ROUTE-TO-ZI-CFR"
   virtual_router = panos_virtual_router.default.name
   destination    = panos_address_object.zi_cfr_range.value
