@@ -79,7 +79,8 @@ resource "panos_virtual_router" "default" {
     panos_ethernet_interface.eth4.name,
     panos_ethernet_interface.eth5.name,
     panos_ethernet_interface.eth6.name,
-    panos_tunnel_interface.ov_pa.name
+    panos_tunnel_interface.ov_pa.name,
+    panos_tunnel_interface.zi_cfr.name
   ]
 }
 
@@ -211,7 +212,8 @@ resource "panos_zone" "vpn_s2s" {
   name           = "ZONE-VPN-S2S"
   mode           = "layer3"
   interfaces     = [
-    panos_tunnel_interface.ov_pa.name
+    panos_tunnel_interface.ov_pa.name,
+    panos_tunnel_interface.zi_cfr.name
   ]
   enable_user_id = true
 }
