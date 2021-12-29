@@ -8,7 +8,7 @@ resource "panos_nat_rule_group" "default" {
       ]
       destination_zone      = panos_zone.untrust.name
       destination_interface = panos_ethernet_interface.eth1.name
-      source_addresses = [panos_address_object.local_range.name,panos_address_object.local_range_aks.name]
+      source_addresses = [panos_address_object.local_range.name,panos_address_object.local_range_aks_web.name]
       destination_addresses = ["any"]
     }
     translated_packet {
@@ -65,7 +65,7 @@ resource "panos_security_policy_group" "default" {
   rule {
     name                  = "PERMIT DNS TO DOMAIN CONTROLLER LOCAL"
     source_zones          = [panos_zone.internal.name,panos_zone.web.name]
-    source_addresses      = [panos_address_object.local_mgmt.name,panos_address_object.local_range_aks.name]
+    source_addresses      = [panos_address_object.local_mgmt.name,panos_address_object.local_range_aks_web.name]
     source_users          = ["any"]
     hip_profiles          = ["any"]
     destination_zones     = [panos_zone.vpn_s2s.name]
@@ -79,7 +79,7 @@ resource "panos_security_policy_group" "default" {
   rule {
     name                  = "PERMIT AKS RANGE TO AZURE"
     source_zones          = [panos_zone.web.name]
-    source_addresses      = [panos_address_object.local_range_aks.name]
+    source_addresses      = [panos_address_object.local_range_aks_web.name]
     source_users          = ["any"]
     hip_profiles          = ["any"]
     destination_zones     = [panos_zone.untrust.name]
@@ -125,7 +125,7 @@ resource "panos_security_policy_group" "default" {
     source_users          = ["any"]
     hip_profiles          = ["any"]
     destination_zones     = [panos_zone.web.name]
-    destination_addresses = [panos_address_object.local_range_aks.name]
+    destination_addresses = [panos_address_object.local_range_aks_web.name]
     applications          = ["any"]
     services              = ["application-default"]
     categories            = ["any"]

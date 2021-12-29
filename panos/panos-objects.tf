@@ -5,9 +5,9 @@ resource "panos_address_object" "local_range" {
   description = ""
 }
 
-resource "panos_address_object" "local_range_aks" {
-  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-IP-RANGE_${var.AKSIPAddressPrefix}.0.0"
-  value       = "${var.AKSIPAddressPrefix}.0.0/16"
+resource "panos_address_object" "local_range_aks_web" {
+  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-AKS-WEB-IP-RANGE_${var.AKSIPAddressPrefix}.0.0"
+  value       = "${var.AKSIPAddressPrefix}.0.0/18"
   description = ""
 }
 

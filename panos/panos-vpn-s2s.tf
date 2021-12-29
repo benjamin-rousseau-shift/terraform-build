@@ -36,3 +36,12 @@ resource "panos_ipsec_tunnel_proxy_id_ipv4" "ov_pa_proxy_id" {
   remote = "10.2.0.0/16"
   protocol_any = true
 }
+
+# Proxy ID IPSec
+resource "panos_ipsec_tunnel_proxy_id_ipv4" "ov_pa_proxy_id" {
+  ipsec_tunnel = panos_ipsec_tunnel.ov_pa_ipsec.name
+  name = "PROXY-ID-OV-PA-AKS-WEB"
+  local = panos_address_object.local_range_aks_web.value
+  remote = "10.2.0.0/16"
+  protocol_any = true
+}
