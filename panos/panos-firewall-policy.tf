@@ -2,6 +2,7 @@
 resource "panos_nat_rule_group" "default" {
   rule {
     name = "NAT INTERNET ACCESS"
+    tags = [panos_administrative_tag.internet.name]
     original_packet {
       source_zones          = [
         panos_zone.dbcp.name, panos_zone.internal.name, panos_zone.mgt.name, panos_zone.storage.name, panos_zone.web.name
@@ -26,6 +27,7 @@ resource "panos_nat_rule_group" "default" {
 
   rule {
     name = "NAT TO NGINX HTTP"
+    tags = [panos_administrative_tag.aks_web.name]
     original_packet {
       source_zones          = [panos_zone.untrust.name]
       destination_zone      = panos_zone.untrust.name
@@ -48,6 +50,7 @@ resource "panos_nat_rule_group" "default" {
 
   rule {
     name = "NAT TO NGINX HTTPS"
+    tags = [panos_administrative_tag.aks_web.name]
     original_packet {
       source_zones          = [panos_zone.untrust.name]
       destination_zone      = panos_zone.untrust.name
@@ -72,6 +75,7 @@ resource "panos_nat_rule_group" "default" {
 # SEC Rules
 resource "panos_security_policy_group" "default" {
   rule {
+    tags = [panos_administrative_tag.vpn-s2s.name,panos_administrative_tag.panorama.name]
     name                  = "PERMIT ACCESS TO PANORAMA LOCAL"
     source_zones          = [panos_zone.internal.name, panos_zone.vpn_s2s.name]
     source_addresses      = [panos_address_object.panorama.name, panos_address_object.local_mgmt.name]
@@ -86,6 +90,7 @@ resource "panos_security_policy_group" "default" {
   }
 
   rule {
+    tags = [panos_administrative_tag.vpn-s2s.name]
     name                  = "PERMIT DNS TO DOMAIN CONTROLLER LOCAL"
     source_zones          = [panos_zone.internal.name,panos_zone.web.name]
     source_addresses      = [panos_address_object.local_mgmt.name,panos_address_object.local_range_aks_web.name]
@@ -100,6 +105,22 @@ resource "panos_security_policy_group" "default" {
   }
 
   rule {
+    tags = [panos_administrative_tag.internet.name]
+    name                  = "PERMIT LOCAL MGMT TO INTERNET"
+    source_zones          = [panos_zone.internal.name]
+    source_addresses      = [panos_address_object.local_mgmt.name]
+    source_users          = ["any"]
+    hip_profiles          = ["any"]
+    destination_zones     = [panos_zone.untrust.name]
+    destination_addresses = ["any"]
+    applications          = ["ssl","pan-db-cloud","paloalto-updates"]
+    services              = ["application-default"]
+    categories            = ["any"]
+    action                = "allow"
+  }
+
+  rule {
+    tags = [panos_administrative_tag.internet.name]
     name                  = "PERMIT AKS RANGE TO AZURE"
     source_zones          = [panos_zone.web.name]
     source_addresses      = [panos_address_object.local_range_aks_web.name]
@@ -114,6 +135,7 @@ resource "panos_security_policy_group" "default" {
   }
 
   rule {
+    tags = [panos_administrative_tag.vpn-s2s.name]
     name                  = "PERMIT VPN-S2S LOCAL"
     source_zones          = [panos_zone.untrust.name]
     source_addresses      = [panos_address_object.ov_pa_pub.name, panos_address_object.local_pub_ip.name]
@@ -128,6 +150,7 @@ resource "panos_security_policy_group" "default" {
   }
 
   rule {
+    tags = [panos_administrative_tag.internet.name,panos_administrative_tag.aks_web]
     name                  = "PERMIT INTERNET TO NGINX POC"
     source_zones          = [panos_zone.untrust.name]
     source_addresses      = ["any"]
@@ -142,6 +165,7 @@ resource "panos_security_policy_group" "default" {
   }
 
   rule {
+    tags = [panos_administrative_tag.vpn-s2s.name,panos_administrative_tag.aks_web]
     name                  = "PERMIT VPN-CLIENT USER ACCESS TO NGINX"
     source_zones          = [panos_zone.vpn_s2s.name]
     source_addresses      = [panos_address_group.local_vpn_client.name]

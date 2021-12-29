@@ -6,6 +6,34 @@ resource "panos_administrative_tag" "tag_vpn_clients" {
   comment = ""
 }
 
+resource "panos_administrative_tag" "internet" {
+  name = "INTERNET"
+  vsys = "vsys1"
+  color = "color7"
+  comment = ""
+}
+
+resource "panos_administrative_tag" "vpn-s2s" {
+  name = "VPN-S2S"
+  vsys = "vsys1"
+  color = "color17"
+  comment = ""
+}
+
+resource "panos_administrative_tag" "aks_web" {
+  name = "AKS-WEB"
+  vsys = "vsys1"
+  color = "color27"
+  comment = ""
+}
+
+resource "panos_administrative_tag" "panorama" {
+  name = "PANORAMA"
+  vsys = "vsys1"
+  color = "color37"
+  comment = ""
+}
+
 # Address Objects
 resource "panos_address_object" "ov_pa_pub" {
   name        = "LOCAL_${var.enterprise}-OV-PA-PUB-IP_54.36.29.130"
