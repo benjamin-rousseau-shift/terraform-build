@@ -64,8 +64,8 @@ resource "panos_address_object" "ov_pa_pub" {
 }
 
 resource "panos_address_object" "zi_cfr_pub" {
-  name        = "LOCAL_${var.enterprise}-ZI-CFR-PUB-IP_20.188.33.147"
-  value       = "20.188.33.147"
+  name        = "LOCAL_${var.enterprise}-ZI-CFR-PUB-IP_40.89.155.125"
+  value       = "40.89.155.125"
   description = "It's the Pub IP of ZI-CFR used for VPN-S2S"
   tags = [panos_administrative_tag.tunnel_pub_ips.name]
 }
