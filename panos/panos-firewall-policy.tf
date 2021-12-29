@@ -16,7 +16,7 @@ resource "panos_nat_rule_group" "default" {
         dynamic_ip_and_port {
           interface_address {
             interface = panos_ethernet_interface.eth1.name
-            ip_address = "${var.IPAddressPrefix}.1.254/24"
+            ip_address = panos_ethernet_interface.eth1.static_ips[0]
           }
         }
       }
