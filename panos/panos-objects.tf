@@ -34,7 +34,21 @@ resource "panos_administrative_tag" "panorama" {
   comment = ""
 }
 
+resource "panos_administrative_tag" "vault" {
+  name = "VAULT"
+  vsys = "vsys1"
+  color = "color20"
+  comment = ""
+}
+
 # Address Objects
+resource "panos_address_object" "vault" {
+  name        = "LOCAL_${var.enterprise}-ZI-HASH-VA1_10.57.31.12"
+  value       = "10.57.31.12"
+  description = "It's the IP of the Hashicorp Vault"
+  tags = [panos_administrative_tag.vault.name]
+}
+
 resource "panos_address_object" "ov_pa_pub" {
   name        = "LOCAL_${var.enterprise}-OV-PA-PUB-IP_54.36.29.130"
   value       = "54.36.29.130"
@@ -54,7 +68,7 @@ resource "panos_address_object" "panorama" {
 }
 
 resource "panos_address_object" "local_range" {
-  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-IP-RANGE_${var.IPAddressPrefix}.0.0"
+  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-IP-RANGE_${var.IPAddressPrefix}.0.0-16"
   value       = "${var.IPAddressPrefix}.0.0/16"
   description = ""
 }
@@ -66,41 +80,41 @@ resource "panos_address_object" "local_pub_ip" {
 }
 
 resource "panos_address_object" "ov_pa_range" {
-  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-IP-RANGE_10.2.0.0"
+  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-IP-RANGE_10.2.0.0-16"
   value       = "10.2.0.0/16"
   description = ""
 }
 
 resource "panos_address_object" "ov_pa_vpn_range" {
-  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-CLIENT-VPN-PARIS-IP-RANGE_10.2.4.0"
+  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-CLIENT-VPN-PARIS-IP-RANGE_10.2.4.0-24"
   value       = "10.2.4.0/24"
   description = ""
   tags = [panos_administrative_tag.tag_vpn_clients.name]
 }
 
 resource "panos_address_object" "az_eus_vpn_range" {
-  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-CLIENT-VPN-US-IP-RANGE_10.32.6.0"
+  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-CLIENT-VPN-US-IP-RANGE_10.32.6.0-24"
   value       = "10.32.6.0/24"
   description = ""
   tags = [panos_administrative_tag.tag_vpn_clients.name]
 }
 
 resource "panos_address_object" "az_sg_vpn_range" {
-  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-CLIENT-VPN-SG-IP-RANGE_10.28.6.0"
+  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-CLIENT-VPN-SG-IP-RANGE_10.28.6.0-24"
   value       = "10.28.6.0/24"
   description = ""
   tags = [panos_administrative_tag.tag_vpn_clients.name]
 }
 
 resource "panos_address_object" "az_wjp_vpn_range" {
-  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-CLIENT-VPN-SG-IP-RANGE_10.39.6.0"
+  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-CLIENT-VPN-SG-IP-RANGE_10.39.6.0-24"
   value       = "10.39.6.0/24"
   description = ""
   tags = [panos_administrative_tag.tag_vpn_clients.name]
 }
 
 resource "panos_address_object" "local_range_aks_web" {
-  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-AKS-WEB-IP-RANGE_${var.AKSIPAddressPrefix}.0.0"
+  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-AKS-WEB-IP-RANGE_${var.AKSIPAddressPrefix}.0.0-18"
   value       = "${var.AKSIPAddressPrefix}.0.0/18"
   description = ""
 }
@@ -131,7 +145,13 @@ resource "panos_address_object" "local_aks_web_nginx" {
 
 # Address Groups
 resource "panos_address_group" "local_vpn_client" {
-  name = "LOCAL_ALL-VPN-CLIENT"
+  name = "LOCAL_GRP-ALL-VPN-CLIENT"
   dynamic_match = "'VPN-CLIENT'"
   description = "All VPN Client IP Ranges"
+}
+
+resource "panos_address_group" "local_vault" {
+  name = "LOCAL_GRP-HASH-VA"
+  dynamic_match = "'VAULT'"
+  description = "All Hashicorp Vault Group"
 }

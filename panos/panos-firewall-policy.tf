@@ -135,6 +135,21 @@ resource "panos_security_policy_group" "default" {
   }
 
   rule {
+    tags = [panos_administrative_tag.vault.name]
+    name                  = "PERMIT AKS RANGE TO HASH-VA"
+    source_zones          = [panos_zone.web.name]
+    source_addresses      = [panos_address_object.local_range_aks_web.name]
+    source_users          = ["any"]
+    hip_profiles          = ["any"]
+    destination_zones     = [panos_zone.vpn_s2s.name]
+    destination_addresses = [panos_address_group.local_vault.name]
+    applications          = ["ssl"]
+    services              = ["application-default"]
+    categories            = ["any"]
+    action                = "allow"
+  }
+
+  rule {
     tags = [panos_administrative_tag.vpn-s2s.name]
     name                  = "PERMIT VPN-S2S LOCAL"
     source_zones          = [panos_zone.untrust.name]
