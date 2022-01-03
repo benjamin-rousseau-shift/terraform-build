@@ -128,7 +128,7 @@ resource "panos_address_object" "az_sg_vpn_range" {
 }
 
 resource "panos_address_object" "az_wjp_vpn_range" {
-  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-CLIENT-VPN-SG-IP-RANGE_10.39.6.0-24"
+  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-CLIENT-VPN-WJP-IP-RANGE_10.39.6.0-24"
   value       = "10.39.6.0/24"
   description = ""
   tags = [panos_administrative_tag.tag_vpn_clients.name]
