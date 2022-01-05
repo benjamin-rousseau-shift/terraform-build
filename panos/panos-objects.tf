@@ -27,6 +27,33 @@ resource "panos_administrative_tag" "aks_web" {
   comment = ""
 }
 
+resource "panos_administrative_tag" "aks_dbcp" {
+  name = "AKS-DBCP"
+  vsys = "vsys1"
+  color = "color28"
+  comment = ""
+}
+
+resource "panos_administrative_tag" "prod" {
+  name = "PROD"
+  vsys = "vsys1"
+  color = "color11"
+  comment = ""
+}
+resource "panos_administrative_tag" "preprod" {
+  name = "PREPROD"
+  vsys = "vsys1"
+  color = "color12"
+  comment = ""
+}
+
+resource "panos_administrative_tag" "aks" {
+  name = "AKS"
+  vsys = "vsys1"
+  color = "color25"
+  comment = ""
+}
+
 resource "panos_administrative_tag" "panorama" {
   name = "PANORAMA"
   vsys = "vsys1"
@@ -134,10 +161,32 @@ resource "panos_address_object" "az_wjp_vpn_range" {
   tags = [panos_administrative_tag.tag_vpn_clients.name]
 }
 
-resource "panos_address_object" "local_range_aks_web" {
-  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-AKS-WEB-IP-RANGE_${var.AKSIPAddressPrefix}.0.0-20"
+resource "panos_address_object" "local_range_aks_web_preprod" {
+  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-AKS-WEB-PREPROD-IP-RANGE_${var.AKSIPAddressPrefix}.0.0-20"
   value       = "${var.AKSIPAddressPrefix}.0.0/20"
   description = ""
+  tags = [panos_administrative_tag.aks.name,panos_administrative_tag.aks_web.name,panos_administrative_tag.preprod.name]
+}
+
+resource "panos_address_object" "local_range_aks_dbcp_preprod" {
+  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-AKS-DBCP-PREPROD-IP-RANGE_${var.AKSIPAddressPrefix}.16.0-20"
+  value       = "${var.AKSIPAddressPrefix}.16.0/20"
+  description = ""
+  tags = [panos_administrative_tag.aks.name,panos_administrative_tag.aks_dbcp.name,panos_administrative_tag.preprod.name]
+}
+
+resource "panos_address_object" "local_range_aks_web_prod" {
+  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-AKS-WEB-PROD-IP-RANGE_${var.AKSIPAddressPrefix}.32.0-20"
+  value       = "${var.AKSIPAddressPrefix}.32.0/20"
+  description = ""
+  tags = [panos_administrative_tag.aks.name,panos_administrative_tag.aks_web.name,panos_administrative_tag.prod.name]
+}
+
+resource "panos_address_object" "local_range_aks_dbcp_prod" {
+  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-AKS-DBCP-PROD-IP-RANGE_${var.AKSIPAddressPrefix}.64.0-20"
+  value       = "${var.AKSIPAddressPrefix}.64.0/20"
+  description = ""
+  tags = [panos_administrative_tag.aks.name,panos_administrative_tag.aks_dbcp.name,panos_administrative_tag.prod.name]
 }
 
 resource "panos_address_object" "local_nginx_poc_pub" {
@@ -177,8 +226,38 @@ resource "panos_address_group" "local_vault" {
   description = "All Hashicorp Vault Group"
 }
 
+resource "panos_address_group" "local_all_aks" {
+  name = "LOCAL_GRP-ALL-AKS"
+  dynamic_match = "'AKS'"
+  description = "All AKS Of this Datacenter"
+}
+
 resource "panos_address_group" "tunnel" {
   name = "LOCAL_GRP-ALL-TUNNEL-PUB-IP"
   dynamic_match = "'TUNNEL'"
   description = "All Public IP of Different datacenter for tunnel vpn-s2s"
+}
+
+resource "panos_address_group" "local_aks_web_preprod" {
+  name = "LOCAL_GRP-AKS-WEB-PREPROD"
+  dynamic_match = "'AKS-WEB' and 'PREPROD'"
+  description = "All AKS WEB PREPROD"
+}
+
+resource "panos_address_group" "local_aks_web_preprod" {
+  name = "LOCAL_GRP-AKS-DBCP-PREPROD"
+  dynamic_match = "'AKS-DBCP' and 'PREPROD'"
+  description = "All AKS DBCP PREPROD"
+}
+
+resource "panos_address_group" "local_aks_web_prod" {
+  name = "LOCAL_GRP-AKS-WEB-PROD"
+  dynamic_match = "'AKS-WEB' and 'PROD'"
+  description = "All AKS WEB PROD"
+}
+
+resource "panos_address_group" "local_aks_dbcp_prod" {
+  name = "LOCAL_GRP-AKS-DBCP-PROD"
+  dynamic_match = "'AKS-DBCP' and 'PROD'"
+  description = "All AKS DBCP PROD"
 }

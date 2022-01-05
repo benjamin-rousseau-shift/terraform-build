@@ -9,7 +9,7 @@ resource "panos_nat_rule_group" "default" {
       ]
       destination_zone      = panos_zone.untrust.name
       destination_interface = panos_ethernet_interface.eth1.name
-      source_addresses = [panos_address_object.local_range.name,panos_address_object.local_range_aks_web.name]
+      source_addresses = [panos_address_object.local_range.name,panos_address_group.local_all_aks.name]
       destination_addresses = ["any"]
     }
     translated_packet {
@@ -93,7 +93,7 @@ resource "panos_security_policy_group" "default" {
     tags = [panos_administrative_tag.vpn-s2s.name]
     name                  = "PERMIT DNS TO DOMAIN CONTROLLER LOCAL"
     source_zones          = [panos_zone.internal.name,panos_zone.web.name]
-    source_addresses      = [panos_address_object.local_mgmt.name,panos_address_object.local_range_aks_web.name]
+    source_addresses      = [panos_address_object.local_mgmt.name,panos_address_group.local_all_aks.name]
     source_users          = ["any"]
     hip_profiles          = ["any"]
     destination_zones     = [panos_zone.vpn_s2s.name]
@@ -123,7 +123,7 @@ resource "panos_security_policy_group" "default" {
     tags = [panos_administrative_tag.internet.name]
     name                  = "PERMIT AKS RANGE TO AZURE"
     source_zones          = [panos_zone.web.name]
-    source_addresses      = [panos_address_object.local_range_aks_web.name]
+    source_addresses      = [panos_address_group.local_all_aks.name]
     source_users          = ["any"]
     hip_profiles          = ["any"]
     destination_zones     = [panos_zone.untrust.name]
@@ -138,7 +138,7 @@ resource "panos_security_policy_group" "default" {
     tags = [panos_administrative_tag.vault.name]
     name                  = "PERMIT AKS RANGE TO HASH-VA"
     source_zones          = [panos_zone.web.name]
-    source_addresses      = [panos_address_object.local_range_aks_web.name]
+    source_addresses      = [panos_address_group.local_all_aks.name]
     source_users          = ["any"]
     hip_profiles          = ["any"]
     destination_zones     = [panos_zone.vpn_s2s.name]
@@ -180,15 +180,30 @@ resource "panos_security_policy_group" "default" {
   }
 
   rule {
-    tags = [panos_administrative_tag.vpn-s2s.name,panos_administrative_tag.aks_web.name]
-    name                  = "PERMIT VPN-CLIENT USER ACCESS TO NGINX"
+    tags = [panos_administrative_tag.vpn-s2s.name,panos_administrative_tag.aks.name]
+    name                  = "PERMIT VPN-CLIENT USER ACCESS TO AKS"
     source_zones          = [panos_zone.vpn_s2s.name]
     source_addresses      = [panos_address_group.local_vpn_client.name]
     source_users          = ["any"]
     hip_profiles          = ["any"]
     destination_zones     = [panos_zone.web.name]
-    destination_addresses = [panos_address_object.local_range_aks_web.name]
+    destination_addresses = [panos_address_group.local_all_aks.name]
     applications          = ["web-browsing","ssl"]
+    services              = ["application-default"]
+    categories            = ["any"]
+    action                = "allow"
+  }
+
+  rule {
+    tags = [panos_administrative_tag.aks_web.name,panos_administrative_tag.preprod]
+    name                  = "PERMIT AKS-WEB-PREPROD TO AKS-DBCP-PREPROD"
+    source_zones          = [panos_zone.web.name]
+    source_addresses      = [panos_address_group.local_aks_web_preprod.name]
+    source_users          = ["any"]
+    hip_profiles          = ["any"]
+    destination_zones     = [panos_zone.dbcp.name]
+    destination_addresses = [panos_address_group.local_aks_dbcp_prod.name]
+    applications          = ["any"]
     services              = ["application-default"]
     categories            = ["any"]
     action                = "allow"
