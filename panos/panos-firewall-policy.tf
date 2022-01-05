@@ -92,7 +92,7 @@ resource "panos_security_policy_group" "default" {
   rule {
     tags = [panos_administrative_tag.vpn-s2s.name]
     name                  = "PERMIT DNS TO DOMAIN CONTROLLER LOCAL"
-    source_zones          = [panos_zone.internal.name,panos_zone.web.name]
+    source_zones          = [panos_zone.internal.name,panos_zone.web.name,panos_zone.dbcp.name]
     source_addresses      = [panos_address_object.local_mgmt.name,panos_address_group.local_all_aks.name]
     source_users          = ["any"]
     hip_profiles          = ["any"]
@@ -122,7 +122,7 @@ resource "panos_security_policy_group" "default" {
   rule {
     tags = [panos_administrative_tag.internet.name]
     name                  = "PERMIT AKS RANGE TO AZURE"
-    source_zones          = [panos_zone.web.name]
+    source_zones          = [panos_zone.web.name,panos_zone.dbcp.name]
     source_addresses      = [panos_address_group.local_all_aks.name]
     source_users          = ["any"]
     hip_profiles          = ["any"]
@@ -137,7 +137,7 @@ resource "panos_security_policy_group" "default" {
   rule {
     tags = [panos_administrative_tag.vault.name]
     name                  = "PERMIT AKS RANGE TO HASH-VA"
-    source_zones          = [panos_zone.web.name]
+    source_zones          = [panos_zone.web.name,panos_zone.dbcp.name]
     source_addresses      = [panos_address_group.local_all_aks.name]
     source_users          = ["any"]
     hip_profiles          = ["any"]
