@@ -135,8 +135,8 @@ resource "panos_address_object" "az_wjp_vpn_range" {
 }
 
 resource "panos_address_object" "local_range_aks_web" {
-  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-AKS-WEB-IP-RANGE_${var.AKSIPAddressPrefix}.0.0-18"
-  value       = "${var.AKSIPAddressPrefix}.0.0/18"
+  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-AKS-WEB-IP-RANGE_${var.AKSIPAddressPrefix}.0.0-20"
+  value       = "${var.AKSIPAddressPrefix}.0.0/20"
   description = ""
 }
 
