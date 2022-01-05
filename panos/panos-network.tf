@@ -145,7 +145,7 @@ resource "panos_static_route_ipv4" "aks_dbcp_preprod" {
   name           = "ROUTE-TO-AKS-DBCP-PREPROD"
   virtual_router = panos_virtual_router.default.name
   destination    = panos_address_object.local_range_aks_dbcp_preprod.value
-  interface      = panos_ethernet_interface.eth2.name
+  interface      = panos_ethernet_interface.eth4.name
   type           = "ip-address"
   next_hop       = "${var.IPAddressPrefix}.4.1"
 }
@@ -163,7 +163,7 @@ resource "panos_static_route_ipv4" "aks_dbcp_prod" {
   name           = "ROUTE-TO-AKS-DBCP-PROD"
   virtual_router = panos_virtual_router.default.name
   destination    = panos_address_object.local_range_aks_dbcp_prod.value
-  interface      = panos_ethernet_interface.eth2.name
+  interface      = panos_ethernet_interface.eth4.name
   type           = "ip-address"
   next_hop       = "${var.IPAddressPrefix}.4.1"
 }
