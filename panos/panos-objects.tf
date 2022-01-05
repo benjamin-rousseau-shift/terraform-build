@@ -244,7 +244,7 @@ resource "panos_address_group" "local_aks_web_preprod" {
   description = "All AKS WEB PREPROD"
 }
 
-resource "panos_address_group" "local_aks_web_preprod" {
+resource "panos_address_group" "local_aks_dbcp_preprod" {
   name = "LOCAL_GRP-AKS-DBCP-PREPROD"
   dynamic_match = "'AKS-DBCP' and 'PREPROD'"
   description = "All AKS DBCP PREPROD"
