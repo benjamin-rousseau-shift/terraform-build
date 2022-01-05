@@ -132,13 +132,40 @@ resource "panos_static_route_ipv4" "zi_cfr" {
 }
 
 
-resource "panos_static_route_ipv4" "aks_web" {
-  name           = "ROUTE-TO-AKS-WEB"
+resource "panos_static_route_ipv4" "aks_web_preprod" {
+  name           = "ROUTE-TO-AKS-WEB-PREPROD"
   virtual_router = panos_virtual_router.default.name
-  destination    = panos_address_object.local_range_aks_web.value
+  destination    = panos_address_object.local_range_aks_web_preprod.value
   interface      = panos_ethernet_interface.eth2.name
   type           = "ip-address"
   next_hop       = "${var.IPAddressPrefix}.2.1"
+}
+
+resource "panos_static_route_ipv4" "aks_dbcp_preprod" {
+  name           = "ROUTE-TO-AKS-DBCP-PREPROD"
+  virtual_router = panos_virtual_router.default.name
+  destination    = panos_address_object.local_range_aks_dbcp_preprod.value
+  interface      = panos_ethernet_interface.eth2.name
+  type           = "ip-address"
+  next_hop       = "${var.IPAddressPrefix}.4.1"
+}
+
+resource "panos_static_route_ipv4" "aks_web_prod" {
+  name           = "ROUTE-TO-AKS-WEB-PROD"
+  virtual_router = panos_virtual_router.default.name
+  destination    = panos_address_object.local_range_aks_web_prod.value
+  interface      = panos_ethernet_interface.eth2.name
+  type           = "ip-address"
+  next_hop       = "${var.IPAddressPrefix}.2.1"
+}
+
+resource "panos_static_route_ipv4" "aks_dbcp_prod" {
+  name           = "ROUTE-TO-AKS-DBCP-PROD"
+  virtual_router = panos_virtual_router.default.name
+  destination    = panos_address_object.local_range_aks_dbcp_prod.value
+  interface      = panos_ethernet_interface.eth2.name
+  type           = "ip-address"
+  next_hop       = "${var.IPAddressPrefix}.4.1"
 }
 
 # Tunnel Interface
