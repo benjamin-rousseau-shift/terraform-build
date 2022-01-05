@@ -41,7 +41,7 @@ resource "panos_ipsec_tunnel_proxy_id_ipv4" "ov_pa_proxy_id" {
 resource "panos_ipsec_tunnel_proxy_id_ipv4" "ov_pa_proxy_id_aks_web" {
   ipsec_tunnel = panos_ipsec_tunnel.ov_pa_ipsec.name
   name = "PROXY-ID-OV-PA-AKS-WEB"
-  local = panos_address_object.local_range_aks_web.value
+  local = panos_address_object.local_range_aks_range.value
   remote = panos_address_object.ov_pa_range.value
   protocol_any = true
 }
@@ -89,7 +89,7 @@ resource "panos_ipsec_tunnel_proxy_id_ipv4" "zi_cfr_proxy_id" {
 resource "panos_ipsec_tunnel_proxy_id_ipv4" "zi_cfr_proxy_id_aks_web" {
   ipsec_tunnel = panos_ipsec_tunnel.zi_cfr_ipsec.name
   name = "PROXY-ID-ZI-CFR-AKS-WEB"
-  local = panos_address_object.local_range_aks_web.value
+  local = panos_address_object.local_range_aks_range.value
   remote = panos_address_object.zi_cfr_range.value
   protocol_any = true
 }

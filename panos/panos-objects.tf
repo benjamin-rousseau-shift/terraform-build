@@ -161,6 +161,12 @@ resource "panos_address_object" "az_wjp_vpn_range" {
   tags = [panos_administrative_tag.tag_vpn_clients.name]
 }
 
+resource "panos_address_object" "local_range_aks_range" {
+  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-AKS-IP-RANGE_${var.AKSIPAddressPrefix}.0.0-16"
+  value       = "${var.AKSIPAddressPrefix}.0.0/16"
+  description = ""
+}
+
 resource "panos_address_object" "local_range_aks_web_preprod" {
   name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-AKS-WEB-PREPROD-IP-RANGE_${var.AKSIPAddressPrefix}.0.0-20"
   value       = "${var.AKSIPAddressPrefix}.0.0/20"
