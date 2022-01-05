@@ -195,7 +195,7 @@ resource "panos_security_policy_group" "default" {
   }
 
   rule {
-    tags = [panos_administrative_tag.aks_web.name,panos_administrative_tag.preprod]
+    tags = [panos_administrative_tag.aks_web.name,panos_administrative_tag.preprod.name]
     name                  = "PERMIT AKS-WEB-PREPROD TO AKS-DBCP-PREPROD"
     source_zones          = [panos_zone.web.name]
     source_addresses      = [panos_address_group.local_aks_web_preprod.name]
