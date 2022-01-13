@@ -40,7 +40,7 @@ resource "azurerm_virtual_machine" "db1" {
     caching           = "ReadWrite"
     create_option     = "FromImage"
     disk_size_gb = "128"
-    vhd_uri = "${azurerm_storage_account.mystorageaccount-client-hdd.primary_blob_endpoint}${azurerm_storage_container.hdd-vhds.name}"
+    vhd_uri = "${azurerm_storage_account.mystorageaccount-client-hdd.primary_blob_endpoint}${azurerm_storage_container.hdd-vhds.name}/${azurerm_network_interface.db1.name}-OSDisk.vhd"
   }
   os_profile {
     computer_name  = azurerm_network_interface.db1.name
