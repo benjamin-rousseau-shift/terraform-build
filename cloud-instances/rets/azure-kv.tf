@@ -34,3 +34,4 @@ resource "azurerm_key_vault" "mykeyvault-client" {
 
   }
 }
+

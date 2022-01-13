@@ -15,6 +15,12 @@ resource "azurerm_storage_account" "mystorageaccount-client-hdd" {
   }
 }
 
+resource "azurerm_storage_container" "hdd-vhds" {
+  name                  = "vhds"
+  storage_account_name  = azurerm_storage_account.mystorageaccount-client-hdd.name
+  container_access_type = "private"
+}
+
 resource "azurerm_storage_account" "mystorageaccount-client-ssd" {
   name                     = "${lower(var.enterprise)}0${lower(var.environment)}0${lower(var.region)}0${lower(var.client)}0ssd0sa"
   resource_group_name      = azurerm_resource_group.myterraformgroup-client.name
@@ -29,4 +35,10 @@ resource "azurerm_storage_account" "mystorageaccount-client-ssd" {
     STORAGE-TYPE     = "SSD"
     REPLICATION-TYPE = "LRS"
   }
+}
+
+resource "azurerm_storage_container" "ssd-vhds" {
+  name                  = "vhds"
+  storage_account_name  = azurerm_storage_account.mystorageaccount-client-ssd.name
+  container_access_type = "private"
 }
