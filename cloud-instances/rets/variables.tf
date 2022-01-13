@@ -37,3 +37,4 @@ variable "client_secret" {}
 variable "subscription_id" {}
 variable "admin_password" {}
 variable "join_domain_pwd" {}
+variable "object_id" {}
