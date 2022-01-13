@@ -38,7 +38,7 @@ resource "azurerm_key_vault" "mykeyvault-client" {
     object_id = var.object_id
 
     key_permissions = [
-      "Get"
+      "Get","Create"
     ]
 
   }
