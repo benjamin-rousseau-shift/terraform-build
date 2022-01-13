@@ -270,7 +270,7 @@ resource "panos_security_policy_group" "default" {
   }
 
   rule {
-    tags = [panos_administrative_tag.rets_dbcp.name,panos_administrative_tag.vpn-s2s.name]
+    tags = [panos_administrative_tag.rets_dbcp.name,panos_administrative_tag.vault.name]
     name                  = "PERMIT HASH-VA RETS-DBCP"
     source_zones          = [panos_zone.vpn_s2s.name]
     source_addresses      = [panos_address_group.local_vault.name]
