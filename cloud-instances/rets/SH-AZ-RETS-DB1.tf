@@ -54,7 +54,7 @@ resource "azurerm_virtual_machine" "db1" {
     create_option = "Empty"
     disk_size_gb = "100"
     lun = "1"
-    vhd_uri = "${azurerm_storage_account.mystorageaccount-client-hdd.primary_blob_endpoint}${azurerm_storage_container.hdd-vhds.name}"
+    vhd_uri = "${azurerm_storage_account.mystorageaccount-client-hdd.primary_blob_endpoint}${azurerm_storage_container.hdd-vhds.name}/${azurerm_network_interface.db1.name}-UIDisk.vhd"
   }
 
   storage_data_disk {
@@ -62,7 +62,7 @@ resource "azurerm_virtual_machine" "db1" {
     create_option = "Empty"
     disk_size_gb = "100"
     lun = "2"
-    vhd_uri = "${azurerm_storage_account.mystorageaccount-client-hdd.primary_blob_endpoint}${azurerm_storage_container.hdd-vhds.name}"
+    vhd_uri = "${azurerm_storage_account.mystorageaccount-client-hdd.primary_blob_endpoint}${azurerm_storage_container.hdd-vhds.name}/${azurerm_network_interface.db1.name}-TempDBDisk.vhd"
   }
 
   storage_data_disk {
@@ -70,7 +70,7 @@ resource "azurerm_virtual_machine" "db1" {
     create_option = "Empty"
     disk_size_gb = "100"
     lun = "3"
-    vhd_uri = "${azurerm_storage_account.mystorageaccount-client-hdd.primary_blob_endpoint}${azurerm_storage_container.hdd-vhds.name}"
+    vhd_uri = "${azurerm_storage_account.mystorageaccount-client-hdd.primary_blob_endpoint}${azurerm_storage_container.hdd-vhds.name}/${azurerm_network_interface.db1.name}-Detection01Disk.vhd"
   }
 
   os_profile_windows_config {
