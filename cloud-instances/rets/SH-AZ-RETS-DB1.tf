@@ -91,8 +91,7 @@ resource "azurerm_virtual_machine_extension" "joindomain" {
   settings = <<SETTINGS
 {
 "Name": "corp.shift-technology.com",
-"OUPath": "CN=Computers,DC=corp,DC=shift-technology,DC=com",
-"User": "SHIFT\\terraformjoindomain",
+"User": "corp.shift-technology.com\\terraformjoindomain",
 "Restart": "true",
 "Options": "3"
 }
