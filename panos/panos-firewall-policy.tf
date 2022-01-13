@@ -253,4 +253,19 @@ resource "panos_security_policy_group" "default" {
     categories            = ["any"]
     action                = "allow"
   }
+
+  rule {
+    tags = [panos_administrative_tag.rets_dbcp.name,panos_administrative_tag.pdq.name]
+    name                  = "PERMIT RETS-DBCP TO PDQ"
+    source_zones          = [panos_zone.dbcp.name]
+    source_addresses      = [panos_address_group.local_rets_dbcp.name]
+    source_users          = ["any"]
+    hip_profiles          = ["any"]
+    destination_zones     = [panos_zone.vpn_s2s.name]
+    destination_addresses = [panos_address_group.local_pdq.name]
+    applications          = ["ms-ds-smb"]
+    services              = ["application-default"]
+    categories            = ["any"]
+    action                = "allow"
+  }
 }
