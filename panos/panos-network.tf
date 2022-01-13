@@ -168,6 +168,15 @@ resource "panos_static_route_ipv4" "aks_dbcp_prod" {
   next_hop       = "${var.IPAddressPrefix}.4.1"
 }
 
+resource "panos_static_route_ipv4" "aks_dbcp_prod" {
+  name           = "ROUTE-TO-RETS-DBCP"
+  virtual_router = panos_virtual_router.default.name
+  destination    = "10.99.8.64/26"
+  interface      = panos_ethernet_interface.eth4.name
+  type           = "ip-address"
+  next_hop       = "${var.IPAddressPrefix}.4.1"
+}
+
 # Tunnel Interface
 resource "panos_tunnel_interface" "ov_pa" {
   name    = "tunnel.1"
