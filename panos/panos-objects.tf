@@ -117,6 +117,12 @@ resource "panos_address_object" "domain_controller" {
   description = "It's a Domain Controller located in OV-PA"
 }
 
+resource "panos_address_object" "fs1" {
+  name        = "LOCAL_SH-OV-SHFT-FS1_10.2.3.10"
+  value       = "10.2.3.10"
+  description = "It's a file server in OV-PA"
+}
+
 resource "panos_address_object" "pdq" {
   name        = "LOCAL_SH-OV-SHFT-PDQ1"
   value       = "10.2.3.180"
