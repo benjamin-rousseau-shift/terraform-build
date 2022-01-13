@@ -129,7 +129,7 @@ resource "panos_security_policy_group" "default" {
     destination_zones     = [panos_zone.untrust.name]
     destination_addresses = ["any"]
     applications          = ["any"]
-    services              = ["service-https","tcp_9000"]
+    services              = ["service-https","tcp_9000","service-http"]
     categories            = ["any"]
     action                = "allow"
   }
@@ -205,6 +205,21 @@ resource "panos_security_policy_group" "default" {
     destination_addresses = [panos_address_group.local_aks_web_preprod.name,panos_address_group.local_aks_dbcp_prod.name]
     applications          = ["any"]
     services              = ["any"]
+    categories            = ["any"]
+    action                = "allow"
+  }
+
+  rule {
+    tags = [panos_administrative_tag.aks.name,panos_administrative_tag.preprod.name]
+    name                  = "PERMIT AKS-PREPROD TO HASH-VA"
+    source_zones          = [panos_zone.web.name,panos_zone.dbcp.name]
+    source_addresses      = [panos_address_group.local_aks_web_preprod.name,panos_address_group.local_aks_dbcp_prod.name]
+    source_users          = ["any"]
+    hip_profiles          = ["any"]
+    destination_zones     = [panos_zone.vpn_s2s.name]
+    destination_addresses = [panos_address_group.local_vault.name]
+    applications          = ["ssl"]
+    services              = ["tcp_8200"]
     categories            = ["any"]
     action                = "allow"
   }
