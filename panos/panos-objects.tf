@@ -34,6 +34,13 @@ resource "panos_administrative_tag" "aks_dbcp" {
   comment = ""
 }
 
+resource "panos_administrative_tag" "rets_dbcp" {
+  name = "RETS-DBCP"
+  vsys = "vsys1"
+  color = "color29"
+  comment = ""
+}
+
 resource "panos_administrative_tag" "prod" {
   name = "PROD"
   vsys = "vsys1"
@@ -107,6 +114,13 @@ resource "panos_address_object" "panorama" {
   name        = "LOCAL_PANORAMA_10.2.2.1"
   value       = "10.2.2.1"
   description = "It's the Panorama Address"
+}
+
+resource "panos_address_object" "rets-db1" {
+  name        = "LOCAL_SH-AZ-RETS-DB1_${var.IPAddressPrefix}.8.68"
+  value       = "${var.IPAddressPrefix}.8.68"
+  description = "It's a Database for Test named RETS-DB1"
+  tags = [panos_administrative_tag.rets_dbcp.name]
 }
 
 resource "panos_address_object" "local_range" {
@@ -266,4 +280,10 @@ resource "panos_address_group" "local_aks_dbcp_prod" {
   name = "LOCAL_GRP-AKS-DBCP-PROD"
   dynamic_match = "'AKS-DBCP' and 'PROD'"
   description = "All AKS DBCP PROD"
+}
+
+resource "panos_address_group" "local_rets_dbcp" {
+  name = "LOCAL_GRP-RETS-DBCP"
+  dynamic_match = "'RETS-DBCP'"
+  description = "All RETS DBCP Machines"
 }

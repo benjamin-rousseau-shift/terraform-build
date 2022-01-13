@@ -195,14 +195,29 @@ resource "panos_security_policy_group" "default" {
   }
 
   rule {
-    tags = [panos_administrative_tag.aks_web.name,panos_administrative_tag.preprod.name]
-    name                  = "PERMIT AKS-WEB-PREPROD TO AKS-DBCP-PREPROD"
-    source_zones          = [panos_zone.web.name]
-    source_addresses      = [panos_address_group.local_aks_web_preprod.name]
+    tags = [panos_administrative_tag.aks.name,panos_administrative_tag.preprod.name]
+    name                  = "PERMIT AKS-PREPROD CROSS CLUSTER FLOW"
+    source_zones          = [panos_zone.web.name,panos_zone.dbcp.name]
+    source_addresses      = [panos_address_group.local_aks_web_preprod.name,panos_address_group.local_aks_dbcp_prod.name]
     source_users          = ["any"]
     hip_profiles          = ["any"]
-    destination_zones     = [panos_zone.dbcp.name]
-    destination_addresses = [panos_address_group.local_aks_dbcp_prod.name]
+    destination_zones     = [panos_zone.web.name,panos_zone.dbcp.name]
+    destination_addresses = [panos_address_group.local_aks_web_preprod.name,panos_address_group.local_aks_dbcp_prod.name]
+    applications          = ["any"]
+    services              = ["any"]
+    categories            = ["any"]
+    action                = "allow"
+  }
+
+  rule {
+    tags = [panos_administrative_tag.rets_dbcp.name,panos_administrative_tag.vpn-s2s.name]
+    name                  = "PERMIT RETS-DBCP TO DOMAIN CONTROLLER"
+    source_zones          = [panos_zone.dbcp.name]
+    source_addresses      = [panos_address_group.local_rets_dbcp.name]
+    source_users          = ["any"]
+    hip_profiles          = ["any"]
+    destination_zones     = [panos_zone.vpn_s2s.name]
+    destination_addresses = [panos_address_object.domain_controller.name]
     applications          = ["any"]
     services              = ["application-default"]
     categories            = ["any"]
