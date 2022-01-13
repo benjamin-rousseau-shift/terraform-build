@@ -125,7 +125,6 @@ resource "azurerm_key_vault_key" "db1" {
 
 resource "azurerm_virtual_machine_extension" "encrypt" {
   name                 = "AzureDiskEncryption"
-  location             = azurerm_network_interface.db1.location
   virtual_machine_id = azurerm_virtual_machine.db1.id
   publisher            = "Microsoft.Azure.Security"
   type                 = "AzureDiskEncryption"
