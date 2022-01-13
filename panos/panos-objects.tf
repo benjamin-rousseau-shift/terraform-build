@@ -117,7 +117,7 @@ resource "panos_address_object" "domain_controller" {
   description = "It's a Domain Controller located in OV-PA"
 }
 
-resource "panos_address_object" "domain_controller" {
+resource "panos_address_object" "pdq" {
   name        = "LOCAL_SH-OV-SHFT-PDQ1"
   value       = "10.2.3.180"
   description = "It's PDQ bruh."
