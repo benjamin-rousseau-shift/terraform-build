@@ -136,6 +136,12 @@ resource "panos_address_object" "panorama" {
   description = "It's the Panorama Address"
 }
 
+resource "panos_address_object" "dba-mgmt" {
+  name        = "LOCAL_SH-OV-DBA-MGMT1_10.2.251.1"
+  value       = "10.2.251.1"
+  description = "It's DBA Management Server"
+}
+
 resource "panos_address_object" "rets-db1" {
   name        = "LOCAL_SH-AZ-RETS-DB1_${var.IPAddressPrefix}.8.68"
   value       = "${var.IPAddressPrefix}.8.68"
