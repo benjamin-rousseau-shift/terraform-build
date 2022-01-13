@@ -73,6 +73,10 @@ resource "azurerm_virtual_machine" "db1" {
     vhd_uri = "${azurerm_storage_account.mystorageaccount-client-hdd.primary_blob_endpoint}${azurerm_storage_container.hdd-vhds.name}"
   }
 
+  os_profile_windows_config {
+    provision_vm_agent = true
+    enable_automatic_upgrades = true
+  }
 
 }
 
