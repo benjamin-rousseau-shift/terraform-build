@@ -105,7 +105,7 @@ PROTECTED_SETTINGS
 
 resource "azurerm_key_vault_key" "db1" {
   name         = "${azurerm_network_interface.db1.name}-KEK"
-  key_vault_id = azurerm_key_vault.mykeyvault-client.name
+  key_vault_id = azurerm_key_vault.mykeyvault-client.id
   key_type     = "RSA"
   key_size     = 2048
   depends_on = [azurerm_virtual_machine.db1,azurerm_key_vault.mykeyvault-client]
