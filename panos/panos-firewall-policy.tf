@@ -173,7 +173,7 @@ resource "panos_security_policy_group" "default" {
     hip_profiles          = ["any"]
     destination_zones     = [panos_zone.web.name]
     destination_addresses = [panos_address_object.local_nginx_poc_pub.name]
-    applications          = ["web-browsing"]
+    applications          = ["web-browsing","ssl"]
     services              = ["application-default"]
     categories            = ["any"]
     action                = "allow"
