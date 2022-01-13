@@ -39,7 +39,6 @@ resource "azurerm_virtual_machine" "db1" {
     name              = "${azurerm_network_interface.db1.name}-OSDisk"
     caching           = "ReadWrite"
     create_option     = "FromImage"
-    managed_disk_type = "Standard_LRS"
     disk_size_gb = "128"
     vhd_uri = "${azurerm_storage_account.mystorageaccount-client-hdd.primary_blob_endpoint}${azurerm_storage_container.hdd-vhds.name}"
   }
@@ -99,7 +98,7 @@ SETTINGS
 "Password": "${var.join_domain_pwd}"
 }
 PROTECTED_SETTINGS
-  depends_on = ["azurerm_virtual_machine.db1"]
+  depends_on = [azurerm_virtual_machine.db1]
 }
 
 # Key Encryption Key (KEK)
