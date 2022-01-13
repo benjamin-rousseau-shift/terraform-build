@@ -223,4 +223,19 @@ resource "panos_security_policy_group" "default" {
     categories            = ["any"]
     action                = "allow"
   }
+
+  rule {
+    tags = [panos_administrative_tag.rets_dbcp.name,panos_administrative_tag.vpn-s2s.name]
+    name                  = "PERMIT ADM TO RETS-DBCP"
+    source_zones          = [panos_zone.vpn_s2s.name]
+    source_addresses      = [panos_address_group.local_vpn_client.name]
+    source_users          = ["any"]
+    hip_profiles          = ["any"]
+    destination_zones     = [panos_zone.dbcp.name]
+    destination_addresses = [panos_address_group.local_rets_dbcp.name]
+    applications          = ["any"]
+    services              = ["application-default"]
+    categories            = ["any"]
+    action                = "allow"
+  }
 }
