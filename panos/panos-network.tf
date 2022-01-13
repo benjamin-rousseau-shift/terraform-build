@@ -168,7 +168,7 @@ resource "panos_static_route_ipv4" "aks_dbcp_prod" {
   next_hop       = "${var.IPAddressPrefix}.4.1"
 }
 
-resource "panos_static_route_ipv4" "aks_dbcp_prod" {
+resource "panos_static_route_ipv4" "rets_dbcp" {
   name           = "ROUTE-TO-RETS-DBCP"
   virtual_router = panos_virtual_router.default.name
   destination    = "10.99.8.64/26"
