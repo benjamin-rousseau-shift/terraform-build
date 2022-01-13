@@ -139,7 +139,7 @@ resource "azurerm_virtual_machine_extension" "encrypt" {
   "EncryptionOperation": "EnableEncryption",
   "KeyVaultURL": "${azurerm_key_vault.mykeyvault-client.vault_uri}",
   "KeyVaultResourceId": "${azurerm_key_vault.mykeyvault-client.id}",
-  "KeyEncryptionKeyURL": "${azurerm_key_vault.mykeyvault-client.vault_uri}/keys/${azurerm_key_vault_key.db1.name}/${azurerm_key_vault_key.db1.version}",
+  "KeyEncryptionKeyURL": "${azurerm_key_vault.mykeyvault-client.vault_uri}keys/${azurerm_key_vault_key.db1.name}/${azurerm_key_vault_key.db1.version}",
   "KekVaultResourceId": "${azurerm_key_vault.mykeyvault-client.id}",
   "KeyEncryptionAlgorithm": "RSA-OAEP",
   "VolumeType": "All"
