@@ -82,6 +82,13 @@ resource "panos_administrative_tag" "tunnel_pub_ips" {
   comment = ""
 }
 
+resource "panos_administrative_tag" "pdq" {
+  name = "PDQ"
+  vsys = "vsys1"
+  color = "color22"
+  comment = ""
+}
+
 # Address Objects
 resource "panos_address_object" "vault" {
   name        = "LOCAL_${var.enterprise}-ZI-HASH-VA1_10.57.31.12"
@@ -108,6 +115,13 @@ resource "panos_address_object" "domain_controller" {
   name        = "LOCAL_DANDORAN_10.2.3.1"
   value       = "10.2.3.1"
   description = "It's a Domain Controller located in OV-PA"
+}
+
+resource "panos_address_object" "domain_controller" {
+  name        = "LOCAL_SH-OV-SHFT-PDQ1"
+  value       = "10.2.3.180"
+  description = "It's PDQ bruh."
+  tags = [panos_administrative_tag.pdq.name]
 }
 
 resource "panos_address_object" "panorama" {
@@ -286,4 +300,10 @@ resource "panos_address_group" "local_rets_dbcp" {
   name = "LOCAL_GRP-RETS-DBCP"
   dynamic_match = "'RETS-DBCP'"
   description = "All RETS DBCP Machines"
+}
+
+resource "panos_address_group" "local_pdq" {
+  name = "LOCAL_GRP-ALL-PDQ"
+  dynamic_match = "'PDQ'"
+  description = "All PDQ Servers"
 }
