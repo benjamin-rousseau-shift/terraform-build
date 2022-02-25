@@ -254,8 +254,8 @@ resource "panos_address_object" "local_nginx" {
 }
 
 resource "panos_address_object" "local_aks_web_nginx" {
-  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-AKS-WEB-NGINX-LB-PRIV-IP_${var.AKSIPAddressPrefix}.1.81"
-  value       = "${var.AKSIPAddressPrefix}.1.81"
+  name        = "LOCAL_${var.enterprise}-${var.environment}-${var.region}-AKS-WEB-NGINX-LB-PRIV-IP_${var.AKSIPAddressPrefix}.2.1"
+  value       = "${var.AKSIPAddressPrefix}.2.1"
   description = ""
 }
 
