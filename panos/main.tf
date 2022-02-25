@@ -3,11 +3,11 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~>2.0"
+      version = "~>2.98.0"
     }
     panos   = {
       source  = "paloaltonetworks/panos"
-      version = "1.8.3"
+      version = "~>=1.10.0"
     }
   }
 }
