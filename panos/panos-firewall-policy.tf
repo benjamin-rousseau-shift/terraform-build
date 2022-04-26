@@ -177,6 +177,7 @@ resource "panos_security_policy_group" "default" {
     services              = ["application-default"]
     categories            = ["any"]
     action                = "allow"
+    disabled = true
   }
 
   rule {
