@@ -7,7 +7,6 @@ resource "azurerm_key_vault" "mykeyvault-client" {
   tenant_id                   = var.tenant_id
   soft_delete_retention_days  = 7
   purge_protection_enabled    = false
-  depends_on = [azuread_service_principal.adapp-client-sp]
 
   sku_name = "standard"
 
@@ -24,15 +23,6 @@ resource "azurerm_key_vault" "mykeyvault-client" {
     ]
   }
 
-  access_policy {
-    tenant_id = var.tenant_id
-    object_id = azuread_service_principal.adapp-client-sp.id
-
-    key_permissions = [
-      "Get","UnwrapKey","WrapKey"
-    ]
-
-  }
   access_policy {
     tenant_id = var.tenant_id
     object_id = var.object_id

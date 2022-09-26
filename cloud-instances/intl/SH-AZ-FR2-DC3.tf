@@ -6,7 +6,7 @@ resource "azurerm_network_interface" "DC3" {
 
   ip_configuration {
     name                          = "primary"
-    subnet_id                     = azurerm_subnet.myterraformsubnet-client-dbcp.id
+    subnet_id                     = azurerm_subnet.myterraformsubnet-client-intl.id
     private_ip_address_allocation = "Static"
     private_ip_address            = "${var.IPAddressPrefix}.248.17"
   }
