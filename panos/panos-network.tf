@@ -170,11 +170,11 @@ resource "panos_static_route_ipv4" "aks_dbcp_prod" {
   next_hop       = "${var.IPAddressPrefix}.4.1"
 }
 
-resource "panos_static_route_ipv4" "rets_dbcp" {
+resource "panos_static_route_ipv4" "intl" {
   name           = "ROUTE-TO-INTL"
   virtual_router = panos_virtual_router.default.name
   destination    = "10.99.248.0/24"
-  interface      = panos_ethernet_interface.eth4.name
+  interface      = panos_ethernet_interface.eth5.name
   type           = "ip-address"
   next_hop       = "${var.IPAddressPrefix}.5.1"
 }
