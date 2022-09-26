@@ -114,6 +114,8 @@ resource "panos_static_route_ipv4" "default" {
   next_hop       = "${var.IPAddressPrefix}.1.1"
 }
 
+
+
 resource "panos_static_route_ipv4" "ov_pa" {
   name           = "ROUTE-TO-OV-PA"
   virtual_router = panos_virtual_router.default.name
@@ -166,6 +168,15 @@ resource "panos_static_route_ipv4" "aks_dbcp_prod" {
   interface      = panos_ethernet_interface.eth4.name
   type           = "ip-address"
   next_hop       = "${var.IPAddressPrefix}.4.1"
+}
+
+resource "panos_static_route_ipv4" "rets_dbcp" {
+  name           = "ROUTE-TO-INTL"
+  virtual_router = panos_virtual_router.default.name
+  destination    = "10.99.248.0/24"
+  interface      = panos_ethernet_interface.eth4.name
+  type           = "ip-address"
+  next_hop       = "${var.IPAddressPrefix}.5.1"
 }
 
 resource "panos_static_route_ipv4" "rets_dbcp" {

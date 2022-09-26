@@ -96,8 +96,8 @@ resource "panos_security_policy_group" "default" {
     source_addresses      = [panos_address_object.local_mgmt.name,panos_address_group.local_all_aks.name]
     source_users          = ["any"]
     hip_profiles          = ["any"]
-    destination_zones     = [panos_zone.vpn_s2s.name]
-    destination_addresses = [panos_address_object.domain_controller.name]
+    destination_zones     = [panos_zone.vpn_s2s.name,panos_zone.internal.name]
+    destination_addresses = [panos_address_object.domain_controller.name,panos_address_group.local_intl.name]
     applications          = ["dns"]
     services              = ["application-default"]
     categories            = ["any"]
@@ -234,6 +234,36 @@ resource "panos_security_policy_group" "default" {
     hip_profiles          = ["any"]
     destination_zones     = [panos_zone.vpn_s2s.name]
     destination_addresses = [panos_address_object.domain_controller.name]
+    applications          = ["any"]
+    services              = ["application-default"]
+    categories            = ["any"]
+    action                = "allow"
+  }
+
+  rule {
+    tags = [panos_administrative_tag.rets_dbcp.name,panos_administrative_tag.vpn-s2s.name]
+    name                  = "PERMIT INTL TO DOMAIN CONTROLLER"
+    source_zones          = [panos_zone.internal.name]
+    source_addresses      = [panos_address_group.local_intl.name]
+    source_users          = ["any"]
+    hip_profiles          = ["any"]
+    destination_zones     = [panos_zone.vpn_s2s.name]
+    destination_addresses = [panos_address_object.domain_controller.name]
+    applications          = ["any"]
+    services              = ["application-default"]
+    categories            = ["any"]
+    action                = "allow"
+  }
+
+  rule {
+    tags = [panos_administrative_tag.rets_dbcp.name,panos_administrative_tag.vpn-s2s.name]
+    name                  = "PERMIT ADM TO INTL"
+    source_zones          = [panos_zone.vpn_s2s.name]
+    source_addresses      = [panos_address_group.local_vpn_client.name]
+    source_users          = ["any"]
+    hip_profiles          = ["any"]
+    destination_zones     = [panos_zone.internal.name]
+    destination_addresses = [panos_address_group.local_intl.name]
     applications          = ["any"]
     services              = ["application-default"]
     categories            = ["any"]

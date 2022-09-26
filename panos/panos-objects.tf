@@ -41,6 +41,13 @@ resource "panos_administrative_tag" "rets_dbcp" {
   comment = ""
 }
 
+resource "panos_administrative_tag" "intl" {
+  name = "INTL"
+  vsys = "vsys1"
+  color = "color30"
+  comment = ""
+}
+
 resource "panos_administrative_tag" "prod" {
   name = "PROD"
   vsys = "vsys1"
@@ -147,6 +154,13 @@ resource "panos_address_object" "rets-db1" {
   value       = "${var.IPAddressPrefix}.8.68"
   description = "It's a Database for Test named RETS-DB1"
   tags = [panos_administrative_tag.rets_dbcp.name]
+}
+
+resource "panos_address_object" "intl-dc3" {
+  name        = "LOCAL_SH-AZ-FR2-DC3_${var.IPAddressPrefix}.248.17"
+  value       = "${var.IPAddressPrefix}.248.17"
+  description = "It's a Domain Controller for AZ-FR2"
+  tags = [panos_administrative_tag.intl.name]
 }
 
 resource "panos_address_object" "local_range" {
@@ -312,6 +326,12 @@ resource "panos_address_group" "local_rets_dbcp" {
   name = "LOCAL_GRP-RETS-DBCP"
   dynamic_match = "'RETS-DBCP'"
   description = "All RETS DBCP Machines"
+}
+
+resource "panos_address_group" "local_intl" {
+  name = "LOCAL_GRP-INTL"
+  dynamic_match = "'INTL'"
+  description = "All INTL Machines"
 }
 
 resource "panos_address_group" "local_pdq" {
